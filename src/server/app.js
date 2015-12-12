@@ -11,7 +11,6 @@ import PrettyError from 'pretty-error';
 import config from './config/server';
 
 
-
 /**
  * Constants
  */
@@ -72,11 +71,29 @@ server.use(session({
 
 
 // Static Assets
-server.use(express.static(__dirname +'./public'));
 
 // Attach Router
 // require('./router')(server);
+server.get('/index.html', function (req, res) {
+   res.sendFile( __dirname + "/" + "index.html" );
+})
 
+server.get('/', function (req, res) {
+   res.send("Hello world" );
+})
+
+server.get('/process_get', function (req, res) {
+
+   // Prepare output in JSON format
+   console.log({
+       first_name:req.query.first_name,
+       last_name:req.query.last_name
+   });
+   res.end(JSON.stringify({
+       first_name:req.query.first_name,
+       last_name:req.query.last_name
+   }));
+})
 
 
 /**
@@ -88,7 +105,7 @@ server.use((req, res, next)=>{
   next(err);
 });
 
-
+server.use(express.static('public'));
 /**
  * Error Handler
  */
@@ -115,7 +132,6 @@ server.use((err, req, res, next)=> {
     }
   });
 });
-
 
 // Launch the server
 server.set('port', (process.env.PORT || 3000));
