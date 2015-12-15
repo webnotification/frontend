@@ -9,7 +9,19 @@ import morgan from 'morgan';
 import session from 'express-session';
 import PrettyError from 'pretty-error';
 import config from './config/server';
+import mongoose from 'mongoose';
 
+var MongoClient = require('mongodb').MongoClient;
+var register_id_coll;
+var notification_coll;
+var project_key_coll;
+MongoClient.connect("mongodb://localhost:27017/users", function(err, db) {
+  if(err) { return console.dir(err); };
+  register_id_coll = db.collection('register_id');
+  notification_coll = db.collection('notification');
+  project_key_coll = db.collection('project_key');
+  console.log("--- DB successfully connected ---");
+});
 
 /**
  * Constants
@@ -37,6 +49,7 @@ pe.withoutColors();
  */
 
 let server = express();
+server.use(express.static(__dirname + '/public'));
 server.set('env', isProduction ? 'production': 'development');
 
 // Dev Mode
@@ -75,7 +88,7 @@ server.use(session({
 // Attach Router
 // require('./router')(server);
 server.get('/index.html', function (req, res) {
-   res.sendFile( __dirname + "/" + "index.html" );
+   res.sendFile( __dirname + "/public/" + "index.html" );
 })
 
 server.get('/', function (req, res) {
@@ -95,6 +108,49 @@ server.get('/process_get', function (req, res) {
    }));
 })
 
+server.post('/userid', function(req, res){
+  console.log("--- subscription --", req.body);
+  var str = req.body['subs'];
+  var register_id = str.split('/');
+  register_id_coll.insert({"id": register_id[register_id.length-1],
+  "website": req.body['website']});
+  /* TO DO*/
+  res.send({});
+})
+
+server.post('/send_client_data', function(req, res){
+  console.log('format', req.body);
+  notification_coll.insert(req.body);
+  console.log('test1');
+  // var all_ids = register_id_coll.find({'website': req.body['website']});
+  console.log(req.body['website']);
+  var all_ids = register_id_coll.find({'website': req.body['website']});
+  console.log('test2');
+  for (i = 0; i < all_ids.length; i++){
+    console.log('test3');
+    website_key = project_key_coll.find({'website': req.body['website']})['key'];
+    // TODO get auth key
+    console.log('test4');
+    website_key = 'key='.concat(website_key)
+    console.log('test5');
+    $.ajax({
+      type: "POST",
+        url: "https://gcm-http.googleapis.com/gcm/send",
+        headers: {'Authorization': website_key,
+        'Content-Type': 'application/json'},
+        to: all_ids[i]['id'],
+        notification: {
+            'title': req.body['title'],
+            'text': req.body['message']
+        }
+        // data:{'subs':end}
+    }).done(function() {
+        console.log("--- success ---");
+
+    });
+  }
+  res.send({});
+})
 
 /**
  * 404
@@ -105,7 +161,7 @@ server.use((req, res, next)=>{
   next(err);
 });
 
-server.use(express.static('public'));
+
 /**
  * Error Handler
  */
