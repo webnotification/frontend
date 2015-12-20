@@ -8,15 +8,12 @@ self.addEventListener('push', function(event) {
   var icon = '/images/image.png';  
   var tag = 'simple-push-demo-notification-tag';
   console.log('about to do it');    
+  
   event.waitUntil(function() {
-        console.log('about to push');    
         self.registration.showNotification(title, {  
             body: body,  
             icon: icon,  
             tag: tag  
         })
       });
-
-  }) 
-
-  
+  }); 

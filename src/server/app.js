@@ -158,22 +158,46 @@ server.post('/send_client_data', function(req, res){
   var website_key1 = 'AIzaSyDuYIh8i3e63Wyag2XHwDPrFYTPITZvIQY';
   // var req_data = req;
   console.log('here4');
+  console.log(JSON.stringify({
+    'title': 'yeah title',
+    'message': 'lol message'
+  }))
+  request({
+    uri: 'https://android.googleapis.com/gcm/send',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'key=AIzaSyDuYIh8i3e63Wyag2XHwDPrFYTPITZvIQY'
+    },
+    form : {
+  'registration_id': 'crVU9OpzP54:APA91bFo84bvCjaX5UcyYbIap2C3iIZfvCcGHVNzD4X8yiLCGnFxdZzP_Upc-x8UNfWWdJq1VL0sWLLxiXl3pzuiRbOlrff_LPPamAnZib5LBVAeZ1wIA-BiqTiIlCn0NUHHPJJlUM_V',
+  'data': JSON.stringify({
+    'title': 'yeah title',
+    'message': 'lol message'
+  })
+  }
+},  function(error, response, body){
+    if(error) {
+        console.log(error);
+    } else {
+        console.log(response.statusCode, body);
+    }
+});
 
+      //   var message = new gcm.Message();
+      //   message.addData('key1', 'msg1');
+      //   message.addNotification('title', 'Alert!!!');
+      //   message.addNotification('body', 'Abnormal data access');
+      //   console.log('here');
+      //   var sender = new gcm.Sender(website_key1);
+      //   var registrationTokens = [];
 
-        var message = new gcm.Message();
-        message.addData('key1', 'msg1');
-        message.addNotification('title', 'Alert!!!');
-        message.addNotification('body', 'Abnormal data access');
-        console.log('here');
-        var sender = new gcm.Sender(website_key1);
-        var registrationTokens = [];
-
-        registrationTokens.push('eNdvQwUjjI0:APA91bFLdqkp590owfCazQJJfnvGu-PFIN0y4kyyUBsofaS5Tr_6_3r9e6Dluc4FtFbUa4kFnchS03MN8Bq84uh6TJ4-Wm5TNZ5837tPVPxHgq-YHMgVX5LMB4nmv241M1KknLVzjCwS');
-      console.log('here1');
-      sender.send(message, { registrationTokens: registrationTokens }, function(err, response) {
-        if(err) console.error(err);
-      else    console.log(response);
-      });
+      //   registrationTokens.push('eNdvQwUjjI0:APA91bFLdqkp590owfCazQJJfnvGu-PFIN0y4kyyUBsofaS5Tr_6_3r9e6Dluc4FtFbUa4kFnchS03MN8Bq84uh6TJ4-Wm5TNZ5837tPVPxHgq-YHMgVX5LMB4nmv241M1KknLVzjCwS');
+      // console.log('here1');
+      // sender.send(message, { registrationTokens: registrationTokens }, function(err, response) {
+      //   if(err) console.error(err);
+      // else    console.log(response);
+      // });
 
    res.send({});
 });
