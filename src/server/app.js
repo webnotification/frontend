@@ -11,6 +11,11 @@ import PrettyError from 'pretty-error';
 import config from './config/server';
 import mongoose from 'mongoose';
 
+
+var gcm = require('node-gcm');
+
+var http = require('http');
+var request = require('request');
 var MongoClient = require('mongodb').MongoClient;
 var register_id_coll;
 var notification_coll;
@@ -82,18 +87,39 @@ server.use(session({
  * Serving
  */
 
-
 // Static Assets
 
 // Attach Router
 // require('./router')(server);
-server.get('/index.html', function (req, res) {
-   res.sendFile( __dirname + "/public/" + "index.html" );
-})
-
-server.get('/', function (req, res) {
+server.get('/hello', function (req, res) {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Origin', 'http://www.flashnotifier.com/');
    res.send("Hello world" );
-})
+   
+});
+
+server.get('/get_message', function (req, res) {
+  var data;
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  notification_coll.findOne({}, function(err, document) {
+    data = {
+      'title': document['title'],
+      'message': document['message'],
+      'target_url': document['target url'],
+    }
+    res.end(JSON.stringify(data));
+    console.log(document); 
+  });
+  // console.log(data);
+  // res.end(JSON.stringify(data));
+ });   
+
+
+// server.get('/index.html', function (req, res) {
+//    res.sendFile( __dirname + "/public/" + "index.html" );
+// });
+
+
 
 server.get('/process_get', function (req, res) {
 
@@ -110,8 +136,11 @@ server.get('/process_get', function (req, res) {
 
 server.post('/userid', function(req, res){
   console.log("--- subscription --", req.body);
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Origin', 'http://www.flashnotifier.com');
   var str = req.body['subs'];
   var register_id = str.split('/');
+  console.log(register_id[register_id.length-1], req.body['website'])
   register_id_coll.insert({"id": register_id[register_id.length-1],
   "website": req.body['website']});
   /* TO DO*/
@@ -119,38 +148,81 @@ server.post('/userid', function(req, res){
 })
 
 server.post('/send_client_data', function(req, res){
-  console.log('format', req.body);
-  notification_coll.insert(req.body);
-  console.log('test1');
+  console.log('start');
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Origin', 'http://www.flashnotifier.com');
+  // notification_coll.insert(req.body);
   // var all_ids = register_id_coll.find({'website': req.body['website']});
-  console.log(req.body['website']);
-  var all_ids = register_id_coll.find({'website': req.body['website']});
-  console.log('test2');
-  for (i = 0; i < all_ids.length; i++){
-    console.log('test3');
-    website_key = project_key_coll.find({'website': req.body['website']})['key'];
-    // TODO get auth key
-    console.log('test4');
-    website_key = 'key='.concat(website_key)
-    console.log('test5');
-    $.ajax({
-      type: "POST",
-        url: "https://gcm-http.googleapis.com/gcm/send",
-        headers: {'Authorization': website_key,
-        'Content-Type': 'application/json'},
-        to: all_ids[i]['id'],
-        notification: {
-            'title': req.body['title'],
-            'text': req.body['message']
-        }
-        // data:{'subs':end}
-    }).done(function() {
-        console.log("--- success ---");
+  console.log('here0');
+  // var all_ids = register_id_coll.find({});
+  var website_key1 = 'AIzaSyDuYIh8i3e63Wyag2XHwDPrFYTPITZvIQY';
+  // var req_data = req;
+  console.log('here4');
 
-    });
-  }
-  res.send({});
-})
+
+        var message = new gcm.Message();
+        message.addData('key1', 'msg1');
+        message.addNotification('title', 'Alert!!!');
+        message.addNotification('body', 'Abnormal data access');
+        console.log('here');
+        var sender = new gcm.Sender(website_key1);
+        var registrationTokens = [];
+
+        registrationTokens.push('eNdvQwUjjI0:APA91bFLdqkp590owfCazQJJfnvGu-PFIN0y4kyyUBsofaS5Tr_6_3r9e6Dluc4FtFbUa4kFnchS03MN8Bq84uh6TJ4-Wm5TNZ5837tPVPxHgq-YHMgVX5LMB4nmv241M1KknLVzjCwS');
+      console.log('here1');
+      sender.send(message, { registrationTokens: registrationTokens }, function(err, response) {
+        if(err) console.error(err);
+      else    console.log(response);
+      });
+
+   res.send({});
+});
+
+
+    //       $.ajax({
+    //   type: "POST",
+    //     url: "https://gcm-http.googleapis.com/gcm/send",
+    //     headers: {'Authorization': website_key1,
+    //     'Content-Type': 'application/json',
+    //     },
+    //     to: doc['id'],
+    //     notification: {
+    //         'title': req.body['title'],
+    //         'text': req.body['message']
+    //     }
+    //     // data:{'subs':end}
+    // }).done(function() {
+    //     console.log("--- success ---");
+    // });
+    // }
+
+
+  // console.log('test2', id_count);
+  // for (i = 0; i < id_count; i++){
+  //   console.log('test3');
+  //   website_key = project_key_coll.find({'website': req.body['website']})['key'];
+  //   // TODO get auth key
+  //   console.log('test4');
+  //   website_key = 'key='.concat(website_key)
+  //   console.log('test5');
+  //   $.ajax({
+  //     type: "POST",
+  //       url: "https://gcm-http.googleapis.com/gcm/send",
+  //       headers: {'Authorization': website_key,
+  //       'Content-Type': 'application/json',
+  //       },
+  //       to: all_ids[i]['id'],
+  //       notification: {
+  //           'title': req.body['title'],
+  //           'text': req.body['message']
+  //       }
+  //       // data:{'subs':end}
+  //   }).done(function() {
+  //       console.log("--- success ---");
+
+  //   });
+  // }
+
 
 /**
  * 404

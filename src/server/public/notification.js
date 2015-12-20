@@ -15,7 +15,7 @@ window.addEventListener('load', function(){
 		}
 	});
 	if ('serviceWorker' in navigator) {
-		navigator.serviceWorker.register('/service-worker.js')
+		navigator.serviceWorker.register('/service-worker1.js')
 		.then(initialiseState);
 	} else{
 		console.warn('Service workers aren\'t supported in the browser.');
@@ -100,7 +100,7 @@ function saveUserId(end){
 
 	$.ajax({
 		type: "POST",
-	  	url: "http://192.168.0.110:3000/userid",
+	  	url: "http://localhost:3000/userid",
 	  	data:{'subs':end, 'website': window.location.host}
 	}).done(function() {
 	  	console.log("--- success ---");
