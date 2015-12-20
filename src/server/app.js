@@ -170,7 +170,7 @@ server.post('/send_client_data', function(req, res){
       'Authorization': 'key=AIzaSyDuYIh8i3e63Wyag2XHwDPrFYTPITZvIQY'
     },
     form : {
-  'registration_id': 'crVU9OpzP54:APA91bFo84bvCjaX5UcyYbIap2C3iIZfvCcGHVNzD4X8yiLCGnFxdZzP_Upc-x8UNfWWdJq1VL0sWLLxiXl3pzuiRbOlrff_LPPamAnZib5LBVAeZ1wIA-BiqTiIlCn0NUHHPJJlUM_V',
+  'registration_id': 'c_gr9j8e69M:APA91bECwnS8rGSB4qI1QjVDDbCD-H0QCm52m-FTkxzo4x1EOm8SmdplF30rBbmYnI6_L5aRtHWddZgy_nncefslmw6V5Fq5OrU854l5qnMPBGrkM-QQd0LiTb5YwZCQGQMWLE1Ny12v',
   'data': JSON.stringify({
     'title': 'yeah title',
     'message': 'lol message'
@@ -180,7 +180,7 @@ server.post('/send_client_data', function(req, res){
     if(error) {
         console.log(error);
     } else {
-        console.log(response.statusCode, body);
+        console.log('status',response.statusCode, body);
     }
 });
 
