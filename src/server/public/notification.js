@@ -15,7 +15,7 @@ window.addEventListener('load', function(){
 		}
 	});
 	if ('serviceWorker' in navigator) {
-		navigator.serviceWorker.register('/service-worker1.js')
+		navigator.serviceWorker.register('/service-worker2.js')
 		.then(initialiseState);
 	} else{
 		console.warn('Service workers aren\'t supported in the browser.');
@@ -53,7 +53,9 @@ function initialiseState(){
 			var sendSubscriptionToServer = function(subscription){
 
 				console.log("--- frontend ---", subscription.endpoint);
-				saveUserId(subscription.endpoint);
+				saveUserId(subscription.endpoint, function(){
+					console.log('Tracking: user subscribed to notifications');
+				});
 			}
 			sendSubscriptionToServer(subscription);
 			pushButton.textContent = 'Disable Push Messages';
@@ -98,14 +100,14 @@ function subscribe(){
 
 function saveUserId(end){
 
-	$.ajax({
-		type: "POST",
-	  	url: "http://localhost:3000/userid",
-	  	data:{'subs':end, 'website': window.location.host}
-	}).done(function() {
-	  	console.log("--- success ---");
+	// $.ajax({
+	// 	type: "POST",
+	//   	url: "http://192.168.0.109:8000/save_push_key",
+	//   	data:{'subs':end, 'website': window.location.host}
+	// }).done(function() {
+	//   	console.log("--- success ---");
 
-	});
+	// });
 }
 
 // self.addEventListener('push', function(event){
