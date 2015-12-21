@@ -18,7 +18,7 @@ function showNotification(title, body, icon, data) {
     tag: 'simple-push-demo-notification',
     data: data
   };
-  return self.registration.showNotification(title, notificationOptions function(){
+  return self.registration.showNotification(title, notificationOptions, function(){
     console.log('Tracking: notification shown');
   });
 }

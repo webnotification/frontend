@@ -100,14 +100,14 @@ function subscribe(){
 
 function saveUserId(end){
 
-	// $.ajax({
-	// 	type: "POST",
-	//   	url: "http://192.168.0.109:8000/save_push_key",
-	//   	data:{'subs':end, 'website': window.location.host}
-	// }).done(function() {
-	//   	console.log("--- success ---");
+     $.ajax({
+         type: "POST",
+           url: "http://192.168.0.109:8000/notification/save_push_key",
+           data:{'subs':end, 'website': window.location.host}
+     }).done(function() {
+           console.log("--- success ---");
 
-	// });
+     });
 }
 
 // self.addEventListener('push', function(event){
