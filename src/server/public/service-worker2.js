@@ -1,10 +1,6 @@
 'use strict';
-
-var YAHOO_WEATHER_API_ENDPOINT = 'https://query.yahooapis.com/' +
-  'v1/public/yql?q=select%20*%20from%20weather.forecast%20where%' +
-  '20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where' +
-  '%20text%3D%22london%2C%20uk%22)&format=json&env=store%3A%2F%2' +
-  'Fdatatables.org%2Falltableswithkeys';
+var user_id;
+var MESSAGE_API;
 
 function showNotification(title, body, icon, data) {
   console.log('showNotification');
@@ -14,23 +10,31 @@ function showNotification(title, body, icon, data) {
   // HTTP, CORs or Size issue.
   var notificationOptions = {
     body: body,
-    icon: '/images/image.png',
+    icon: icon,
     tag: 'simple-push-demo-notification',
     data: data
   };
-  return self.registration.showNotification(title, notificationOptions function(){
+  return self.registration.showNotification(title, notificationOptions, function(){
     console.log('Tracking: notification shown');
   });
 }
 
+self.addEventListener('message', function(event) {
+  console.log('Got it hooo', event.data);
+  var user_id = event.data['user_id'];
+  MESSAGE_API =  'http://localhost:8000/notification/get_notification_data?user_id='+user_id;
+  // event.ports[0].postMessage({'test': 'This is my response.'});
+});
+
 self.addEventListener('push', function(event) {
   console.log('Received a push message', event);
+  
 
   // Since this is no payload data with the first version
   // of Push notifications, here we'll grab some data from
   // an API and use it to populate a notification
   event.waitUntil(
-    fetch(YAHOO_WEATHER_API_ENDPOINT)
+    fetch(MESSAGE_API)
       .then(function(response) {
         if (response.status !== 200) {
           // Throw an error so the promise is rejected and catch() is executed
@@ -42,19 +46,18 @@ self.addEventListener('push', function(event) {
         return response.json();
       })
       .then(function(data) {
-        console.log('Weather API data: ', data);
-        if (data.query.count === 0) {
-          // Throw an error so the promise is rejected and catch() is executed
-          throw new Error();
-        }
+        console.log('Message data: ', data);
+        // if (data.query.count === 0) {
+        //   // Throw an error so the promise is rejected and catch() is executed
+        //   throw new Error();
+        // }
 
-        var title = 'What\'s the weather like in London?';
-        var message = data.query.results.channel.item.condition.text;
-        var icon = data.query.results.channel.image.url ||
-          'images/touch/chrome-touch-icon-192x192.png';
+        var title = data.title;
+        var message = data.message;
+        var icon = '/images/image.png';
 
         // Add this to the data of the notification
-        var urlToOpen = 'data.query.results.channel.link';
+        var urlToOpen = data.target_url;
 
         var notificationFilter = {
           tag: 'simple-push-demo-notification'
