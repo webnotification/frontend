@@ -10,17 +10,18 @@ console.log(readCookie()['user_id']);
 window.addEventListener('load', function(){
 	if (!readCookie()['user_id']) {
 		$.get(
- 		"http://192.168.0.123:8000/notification/generate_user_id?website=localhost:3000",
+ 		"http://localhost:8000/notification/generate_user_id?website=localhost:3000",
     	function(data) {
     	document.cookie='user_id='+data['user_id'].toString();
     	});		
 	}
+
 	var pushButton = document.querySelector('.js-push-button');
 	pushButton.addEventListener('click', function(){
 		var permission_status = false;
 		var user_id = readCookie()['user_id'];
 		$.get(
- 		"http://192.168.0.123:8000/notification/ask_permission?user_id="+user_id,
+ 		"http://localhost:8000/notification/ask_permission?user_id="+user_id,
     	function(data) {
     	permission_status = data['ask'];
 		if (isPushEnabled){
@@ -139,7 +140,7 @@ function subscribe(){
 function saveUserId(end){
 	$.ajax({
 		type: "POST",
-	  	url: "http://192.168.0.123:8000/notification/save_push_key",
+	  	url: "http://localhost:8000/notification/save_push_key",
 	  	data:{'subs':end, 'website': window.location.host}
 	}).done(function() {
 	  	console.log("--- success ---");

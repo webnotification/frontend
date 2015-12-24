@@ -112,6 +112,16 @@ self.addEventListener('push', function(event) {
 self.addEventListener('notificationclick', function(event) {
   console.log('Tracking: notificationclick');
   var url = event.notification.data.url;
+  var myHeaders = new Headers();
+  var myInit = {method: 'POST',
+                headers: myHeaders,
+                mode: 'cors',
+                cache: 'default' };
   event.notification.close();
-  event.waitUntil(clients.openWindow(url));
+  event.waitUntil(clients.openWindow(url), function(){
+    fetch('http://localhost:8000/notification/get_notification_data?user_id='+user_id
+      +"&permission_id="+permission_id+"&action="+action, myInit).then(function(response){
+        console.log(response);
+      })
+  });
 });
