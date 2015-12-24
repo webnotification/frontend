@@ -10,7 +10,7 @@ console.log(readCookie()['user_id']);
 window.addEventListener('load', function(){
 	if (!readCookie()['user_id']) {
 		$.get(
- 		"http://localhost:8000/notification/generate_user_id?website=localhost:3000",
+ 		"http://localhost:8000/notification/generate_user_id?website=" + window.location.host,
     	function(data) {
     	document.cookie='user_id='+data['user_id'].toString();
     	permission_and_subscribe();
@@ -144,14 +144,13 @@ function subscribe(){
 }
 
 function saveUserId(end){
-	$.ajax({
-		type: "POST",
-	  	url: "http://localhost:8000/notification/save_push_key",
-	  	data:{'subs':end, 'website': window.location.host}
-	}).done(function() {
-	  	console.log("--- success ---");
-
-	});
+    $.ajax({
+                type: "POST",
+                url: "http://localhost:8000/notification/save_push_key",
+                data:{'subs':end, 'website': window.location.host, 'user_id': user_id}
+            }).done(function() {
+                console.log("--- success ---");
+                });
 }
 
 function sendMessage(message) {
@@ -177,3 +176,4 @@ function sendMessage(message) {
       [messageChannel.port1]);
   });
 }
+
