@@ -13,9 +13,15 @@ window.addEventListener('load', function(){
  		"http://localhost:8000/notification/generate_user_id?website=localhost:3000",
     	function(data) {
     	document.cookie='user_id='+data['user_id'].toString();
+    	permission_and_subscribe();
     	});		
 	}
+	else{
+		permission_and_subscribe();
+	}
+})
 
+function permission_and_subscribe(){
 	var pushButton = document.querySelector('.js-push-button');
 	pushButton.addEventListener('click', function(){
 		var permission_status = false;
@@ -40,7 +46,7 @@ window.addEventListener('load', function(){
 	} else{
 		console.warn('Service workers aren\'t supported in the browser.');
 	}
-})
+}
 
 function readCookie(){
         c = document.cookie.split('; ');

@@ -1,6 +1,7 @@
 'use strict';
 var user_id;
 var MESSAGE_API;
+var notification_id;
 
 function showNotification(title, body, icon, data) {
   console.log('showNotification');
@@ -55,6 +56,7 @@ self.addEventListener('push', function(event) {
         var title = data.title;
         var message = data.message;
         var icon = '/images/image.png';
+        var notification_id = data.notification_id;
 
         // Add this to the data of the notification
         var urlToOpen = data.target_url;
@@ -118,9 +120,10 @@ self.addEventListener('notificationclick', function(event) {
                 mode: 'cors',
                 cache: 'default' };
   event.notification.close();
+  var action = 'accept';
   event.waitUntil(clients.openWindow(url), function(){
-    fetch('http://localhost:8000/notification/get_notification_data?user_id='+user_id
-      +"&permission_id="+permission_id+"&action="+action, myInit).then(function(response){
+    fetch('http://localhost:8000/notification/send_notification_response?user_id='+user_id
+      +"&notification_id="+notification_id+"&action="+action, myInit).then(function(response){
         console.log(response);
       })
   });
