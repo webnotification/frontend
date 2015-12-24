@@ -4,15 +4,35 @@
 //   if(err) { return console.dir(err); };
 // var collection = db.collection('register_id');*/
 var isPushEnabled = false;
+var user_id = readCookie()['user_id']
+console.log(readCookie()['user_id']);
 
 window.addEventListener('load', function(){
+	if (!readCookie()['user_id']) {
+		$.get(
+ 		"http://localhost:8000/notification/generate_user_id?website=localhost:3000",
+    	function(data) {
+    	document.cookie='user_id='+data['user_id'].toString();
+    	});		
+	}
+
 	var pushButton = document.querySelector('.js-push-button');
 	pushButton.addEventListener('click', function(){
+		var permission_status = false;
+		var user_id = readCookie()['user_id'];
+		$.get(
+ 		"http://localhost:8000/notification/ask_permission?user_id="+user_id,
+    	function(data) {
+    	permission_status = data['ask'];
 		if (isPushEnabled){
 			unsubscribe();
-		} else {
-			subscribe();
-		}
+		} 
+		else if (permission_status){
+			console.log('here');
+		 	subscribe();
+			}
+    
+    	});	
 	});
 	if ('serviceWorker' in navigator) {
 		navigator.serviceWorker.register('/service-worker2.js')
@@ -22,6 +42,17 @@ window.addEventListener('load', function(){
 	}
 })
 
+function readCookie(){
+        c = document.cookie.split('; ');
+        cookies = {};
+
+        for(i=c.length-1; i>=0; i--){
+           C = c[i].split('=');
+           cookies[C[0]] = C[1];
+        }
+
+        return cookies;
+    }
 
 function initialiseState(){
 	if (!('showNotification' in ServiceWorkerRegistration.prototype)){
@@ -30,6 +61,12 @@ function initialiseState(){
 		console.log('Notifications are supported');
 	}
 	if (Notification.permission === 'denied'){
+		// $.get(
+ 	// 	"http://192.168.0.123:8000/notification/send_permission_response?permission_id="
+ 	// 	+ permission_id+"&user_id="+user_id+"&action=reject",
+  //   	function(data){
+  //   	document.cookie='user_id='+data['user_id'].toString();
+  //   	});		
 		console.warn('The user has blocked notifications.');
 		return;
 	}else{
@@ -43,6 +80,9 @@ function initialiseState(){
 	}
 
 	navigator.serviceWorker.ready.then(function(ServiceWorkerRegistration){
+		sendMessage({user_id: user_id}).then(function(data) {
+      	console.log('sedningggg', data);
+    	});
 		ServiceWorkerRegistration.pushManager.getSubscription()
 			.then(function(subscription){
 				var pushButton = document.querySelector('.js-push-button');
@@ -79,7 +119,6 @@ function subscribe(){
 			pushButton.disabled = false;
 			console.log(subscription.endpoint);
 			var sendSubscriptionToServer = function(subscription){
-
 				console.log("--- frontend ---", subscription.endpoint);
 				saveUserId(subscription.endpoint);
 			}
@@ -99,28 +138,36 @@ function subscribe(){
 }
 
 function saveUserId(end){
-
-     $.ajax({
-         type: "POST",
-           url: "http://192.168.0.109:8000/notification/save_push_key",
-           data:{'subs':end, 'website': window.location.host}
-     }).done(function() {
-           console.log("--- success ---");
-
-     });
+	$.ajax({
+                type: "POST",
+                url: "http://localhost:8000/notification/save_push_key",
+                data:{'subs':end, 'website': window.location.host}
+            }).done(function() {
+                console.log("--- success ---");
+                });
 }
 
-// self.addEventListener('push', function(event){
-// 	console.log('Received a push message', event);
-// 	var title = 'Yay a message.';
-// 	var body = 'We have received a push message.';
-// 	var icon = '/images/image.png'; 
-// 	var tag = 'simple-push-demo-notification-tag';
-// 	event.waitUntil(
-// 		self.registration.showNotification(title, {
-// 			body: body,
-// 			icon: icon,
-// 			tag: tag
-// 		})
-// 		);
-// });
+function sendMessage(message) {
+  // This wraps the message posting/response in a promise, which will resolve if the response doesn't
+  // contain an error, and reject with the error if it does. If you'd prefer, it's possible to call
+  // controller.postMessage() and set up the onmessage handler independently of a promise, but this is
+  // a convenient wrapper.
+  return new Promise(function(resolve, reject) {
+    var messageChannel = new MessageChannel();
+    messageChannel.port1.onmessage = function(event) {
+      if (event.data.error) {
+        reject(event.data.error);
+      } else {
+        resolve(event.data);
+      }
+    };
+
+    // This sends the message data as well as transferring messageChannel.port2 to the service worker.
+    // The service worker can then use the transferred port to reply via postMessage(), which
+    // will in turn trigger the onmessage handler on messageChannel.port1.
+    // See https://html.spec.whatwg.org/multipage/workers.html#dom-worker-postmessage
+    navigator.serviceWorker.controller.postMessage(message,
+      [messageChannel.port1]);
+  });
+}
+
