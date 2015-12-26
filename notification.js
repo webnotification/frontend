@@ -6,6 +6,8 @@
 var isPushEnabled = false;
 var user_id = readCookie()['user_id']
 console.log(readCookie()['user_id']);
+var permission_action = 'none';
+var permission_id;
 
 window.addEventListener('load', function(){
 	if (!readCookie()['user_id']) {
@@ -30,6 +32,7 @@ function permission_and_subscribe(){
  		"http://localhost:8000/notification/ask_permission?user_id="+user_id,
     	function(data) {
     	permission_status = data['ask'];
+    	permission_id = data['permission_id'];
 		if (isPushEnabled){
 			unsubscribe();
 		} 
@@ -41,7 +44,7 @@ function permission_and_subscribe(){
     	});	
 	});
 	if ('serviceWorker' in navigator) {
-		navigator.serviceWorker.register('/service-worker2.js')
+		navigator.serviceWorker.register('/service-worker.js', { mode: "cors" })
 		.then(initialiseState);
 	} else{
 		console.warn('Service workers aren\'t supported in the browser.');
@@ -86,7 +89,7 @@ function initialiseState(){
 	}
 
 	navigator.serviceWorker.ready.then(function(ServiceWorkerRegistration){
-		sendMessage({user_id: user_id}).then(function(data) {
+		sendMessage({user_id: user_id}).then(function(data){
       	console.log('sedningggg', data);
     	});
 		ServiceWorkerRegistration.pushManager.getSubscription()
@@ -96,12 +99,11 @@ function initialiseState(){
 			if (!subscription){
 				return;
 			}
+			console.log('saving11');
 			var sendSubscriptionToServer = function(subscription){
 
 				console.log("--- frontend ---", subscription.endpoint);
-				saveUserId(subscription.endpoint, function(){
-					console.log('Tracking: user subscribed to notifications');
-				});
+				saveUserId(subscription.endpoint);
 			}
 			sendSubscriptionToServer(subscription);
 			pushButton.textContent = 'Disable Push Messages';
@@ -124,15 +126,25 @@ function subscribe(){
 			pushButton.textContent = 'Disable Push Messages';
 			pushButton.disabled = false;
 			console.log(subscription.endpoint);
+			console.log('saving22');
 			var sendSubscriptionToServer = function(subscription){
 				console.log("--- frontend ---", subscription.endpoint);
-				saveUserId(subscription.endpoint);
+				saveUserId(subscription.endpoint, 1);
 			}
 			return sendSubscriptionToServer(subscription);
 		})
 		.catch(function(e){
 			if (Notification.permission ==='denied'){
 				console.warn('permission for Notifications was denied');
+				permission_action = 'reject';
+				console.log('rejectingg');
+				$.ajax({
+                type: "POST",
+                url: "http://localhost:8000/notification/send_permission_response",
+                data:{'permission_id':permission_id, 'action': permission_action, 'user_id': user_id}
+            }).done(function() {
+                console.log("---Tracking success ---");
+                });
 				pushButton.disabled = true;
 			} else {
 				console.error('Unable to subscribe to push.', e);
@@ -141,17 +153,29 @@ function subscribe(){
 			}
 		})
 	});
+		
 }
 
-function saveUserId(end){
+function saveUserId(end, track){
+	track = track || 0;
     $.ajax({
                 type: "POST",
                 url: "http://localhost:8000/notification/save_push_key",
                 data:{'subs':end, 'website': window.location.host, 'user_id': user_id}
             }).done(function() {
+         		if (track==0){
+         			return ;         		}
+            	permission_action = 'accept';
+            	console.log('accepting');
+            	$.ajax({
+                type: "POST",
+                url: "http://localhost:8000/notification/send_permission_response",
+                data:{'permission_id':permission_id, 'action': permission_action, 'user_id': user_id}
+            }).done(function() {
                 console.log("--- success ---");
-                });
-}
+                })
+		})
+ }
 
 function sendMessage(message) {
   // This wraps the message posting/response in a promise, which will resolve if the response doesn't
