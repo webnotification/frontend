@@ -55,7 +55,7 @@ self.addEventListener('push', function(event) {
 
         var title = data.title;
         var message = data.message;
-        var icon = '/images/image.png';
+        var icon = data.image;
         var notification_id = data.notification_id;
 
         // Add this to the data of the notification
