@@ -47,7 +47,7 @@ class LoginPage extends Component {
       .post('/login')
       .accept('json')
       .send({
-        username: this.refs.email.getValue(),
+        email: this.refs.email.getValue(),
         password: this.refs.password.getValue()
       })
       .end(this.post_login.bind(this));

@@ -7,8 +7,7 @@ let createOne = (req, res, next)=>{
     company: req.body.company,
     email: req.body.email,
     website: req.body.website,
-
-    is_verified: false,
+    is_verified: true,
     created_at: (new Date()).toISOString()
   };
 

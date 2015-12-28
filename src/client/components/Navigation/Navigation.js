@@ -19,7 +19,7 @@ class Navigation {
   render() {
     return (
       <div className={`Navigation ${this.props.className}`}>
-        <Link to='listings' className='Navigation-Link'> Listings </Link>
+        <Link to='register' className='Navigation-Link'> Register </Link>
         <Link to='login' className='Navigation-Link'>
           <FontIcon className="material-icons">home</FontIcon>
         </Link>

@@ -25,7 +25,7 @@ let UserSchema = new Schema({
   created_at : Date
 });
 
-UserSchema.plugin(passportLocalMongoose, {usernameField:'email'});
+UserSchema.plugin(passportLocalMongoose, {usernameField:'email', usernameQueryFields: ['email']});
 var User = mongoose.model('User', UserSchema);
 
 export default User;

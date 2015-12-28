@@ -17,7 +17,7 @@ let indexPage = (req, res, next)=>{
       .catch( err => { next(err) });
   }
 };
-
+debugger
 // Main AppRouter
 let appRouter = (server)=>{
   server.use('/logout', auth.logout);
