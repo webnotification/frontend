@@ -18,7 +18,7 @@ class Renderer {
 		this.statusCode = 200;
 	}
 
-	render(targetRoute) {
+	render(targetRoute){
 		this.refreshData();
 		return new Promise((resolve, reject)=>{
 			try {
@@ -27,9 +27,9 @@ class Renderer {
 					this.data['body'] = body;
 					this.data['css']  = this.css.join(' ');
 					resolve(this.data);
-				}.bind(this));
+				});
 			} catch (err) { reject(err) }
-		}.bind(this));
+		});
 	}
 }
 

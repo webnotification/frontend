@@ -1,0 +1,34 @@
+.HomePage
+  background-color theme_bg
+  color theme_font
+  height 80vh
+  flex-container column relative
+
+  .main-backdrop
+    min-height 500px
+    height 100%
+    opacity 0.48
+    flex 1
+    background-repeat no-repeat
+    background-size cover
+    background-position center top
+    margin-top -64px
+
+.HomePage .search-wrap
+  flex-container column
+  position absolute
+  width 100%
+  bottom 25vh
+  align-items center
+
+  .search-inner
+    background-color rgba(#fff, 0.64)
+    border 1px rgba(#000, 0.25) solid
+    border-radius 2px
+    display flex
+    align-items center
+
+  .search-dropdown
+    background-color #eee
+  .search-text
+    margin-top -4px

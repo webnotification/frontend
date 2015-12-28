@@ -1,13 +1,12 @@
 import Renderer from './helpers/renderer';
 import routes from '../client/routes';
-// import apiRouter from './api';
-// import auth from './controllers/auth';
+import apiRouter from './api';
+import auth from './controllers/auth';
 import passport from './helpers/passport';
-// import UserController from './controllers/user';
+import UserController from './controllers/user';
 
 let webapp = new Renderer({routes});
 
-// Labhle App
 let indexPage = (req, res, next)=>{
   if (req.query.nobackend == 1){
     res.render('index', {});

@@ -1,0 +1,15 @@
+extends layout
+
+
+block styles
+  style#css(type='text/css') #{css}
+  //- Todo... compile this with project
+  link(
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet"
+  )
+block scripts
+  script(type='text/javascript', src='/app.js')
+
+block content
+  #app!= body
