@@ -42,6 +42,9 @@ function handlePopState(event) {
   Location.navigateTo(window.location.pathname, {replace: !!event.state});
 }
 
+function onLoad(){
+  FastClick.attach(document.body)
+}
 
 // Needed for developer tools
 window.React = React;
@@ -60,4 +63,4 @@ new Promise(resolve => {
     window.attachEvent('onload', resolve);
     window.attachEvent('popstate', handlePopState);
   }
-}).then(() => FastClick.attach(document.body)).then(run);
+}).then(onLoad).then(run);

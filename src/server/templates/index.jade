@@ -1,6 +1,8 @@
 extends layout
 
-
+block meta
+  link(rel="manifest", href="/manifest.json")
+  
 block styles
   style#css(type='text/css') #{css}
   //- Todo... compile this with project
