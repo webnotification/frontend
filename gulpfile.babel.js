@@ -130,7 +130,7 @@ gulp.task('node-debug', cb => {
 // Launch BrowserSync development server
 gulp.task('sync', ['serve', 'node-debug'], cb => {
   browserSync({
-    logPrefix: 'Labhle: ',
+    logPrefix: 'Notifier: ',
     notify: true,
     // Run as an https by setting 'https: true'
     // Note: this uses an unsigned certificate which on first access

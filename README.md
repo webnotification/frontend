@@ -1,2 +1,2 @@
-# labhle
-labhle.com app
+# notifier
+notifier.com app

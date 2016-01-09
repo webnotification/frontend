@@ -17,8 +17,8 @@ let ensure = (req, res, next)=>{
     var redirect;
     if (!req.query.redirect_to)
       redirect = req.protocol + '://' + req.get('host') + req.originalUrl;
-
-    redirect = req.query.redirect_to;
+    else
+      redirect = req.query.redirect_to;
     res.redirect(`/login?redirect_to=${redirect}`);
   }
 }

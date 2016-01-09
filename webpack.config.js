@@ -104,10 +104,48 @@ const config = {
 
 const appConfig = merge({}, config, {
   entry: [
-    './src/client/app.js'
+    './src/client/website/app.js'
   ],
   output: {
-    path: path.join(__dirname, './build/public'),
+    path: path.join(__dirname, './build/public/website'),
+    filename: 'app.js'
+  },
+  target: 'web',
+  devtool: DEBUG ? 'source-map' : false,
+  plugins: [
+    ...config.plugins,
+    new webpack.ProvidePlugin({
+      React: 'react/addons'
+    }),
+    new DefinePlugin(merge({}, GLOBALS, {'__SERVER__': false})),
+    ...(DEBUG ? [] : [
+      new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.UglifyJsPlugin({compress: {warnings: VERBOSE}}),
+      new webpack.optimize.AggressiveMergingPlugin()
+    ]),
+    ...(DEBUG ? [
+      new webpack.NoErrorsPlugin()
+    ] : [])
+  ],
+  module: {
+    loaders: [...config.module.loaders, {
+      test: /\.styl$/,
+      loader: `${STYLE_LOADER}!${CSS_LOADER}!stylus-loader`
+    }]
+  }
+});
+
+
+//
+// Configuration for the dashboard bundle (app.js)
+// -----------------------------------------------------------------------------
+
+const dashboardConfig = merge({}, config, {
+  entry: [
+    './src/client/dashboard/app.js'
+  ],
+  output: {
+    path: path.join(__dirname, './build/public/dashboard'),
     filename: 'app.js'
   },
   target: 'web',
@@ -178,4 +216,4 @@ const serverConfig = merge({}, config, {
   }
 });
 
-export default [appConfig, serverConfig];
+export default [dashboardConfig, appConfig, serverConfig];
