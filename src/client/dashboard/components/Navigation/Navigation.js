@@ -10,7 +10,7 @@ import withStyles from '../../../decorators/withStyles';
 import styles from './Navigation.styl';
 
 @withStyles(styles)
-class Navigation {
+class Navigation extends React.Component{
 
   static propTypes = {
     className: PropTypes.string

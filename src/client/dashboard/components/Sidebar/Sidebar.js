@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PureSidebar from './PureSidebar';
 
 class Sidebar extends React.Component {

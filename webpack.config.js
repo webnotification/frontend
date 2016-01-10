@@ -61,7 +61,7 @@ const config = {
   resolve: {
     alias: {
       "react": __dirname + '/node_modules/react',
-      "react/addons": __dirname + '/node_modules/react/addons'
+      "react-addons-css-transition-group": __dirname + '/node_modules/react-addons-css-transition-group'
     },
     moduleDirectories: ['node_modules'],
     extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx']
@@ -115,7 +115,7 @@ const appConfig = merge({}, config, {
   plugins: [
     ...config.plugins,
     new webpack.ProvidePlugin({
-      React: 'react/addons'
+      React: 'react'
     }),
     new DefinePlugin(merge({}, GLOBALS, {'__SERVER__': false})),
     ...(DEBUG ? [] : [
@@ -153,7 +153,7 @@ const dashboardConfig = merge({}, config, {
   plugins: [
     ...config.plugins,
     new webpack.ProvidePlugin({
-      React: 'react/addons'
+      React: 'react'
     }),
     new DefinePlugin(merge({}, GLOBALS, {'__SERVER__': false})),
     ...(DEBUG ? [] : [
@@ -204,7 +204,7 @@ const serverConfig = merge({}, config, {
       raw: true, entryOnly: false
     }),
     new webpack.ProvidePlugin({
-      React: 'react/addons'
+      React: 'react'
     })
   ],
 
