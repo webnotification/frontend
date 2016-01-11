@@ -21,7 +21,7 @@ class ErrorPage extends React.Component {
         <p>Sorry, an critical error occurred on this page.</p>
       </div>
     );
-  }
+  };
 
 }
 

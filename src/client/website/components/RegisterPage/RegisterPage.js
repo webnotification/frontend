@@ -26,7 +26,7 @@ class RegisterPage extends React.Component {
   state = {
     loading: false,
     error: false
-  }
+  };
 
   post_register(err, res){
     this.setState({
@@ -37,7 +37,7 @@ class RegisterPage extends React.Component {
     if (!err){
       router.transitionTo('login');
     }
-  }
+  };
 
   submit_register(){
     this.setState({loading: true});
@@ -52,7 +52,7 @@ class RegisterPage extends React.Component {
         password: this.refs.password.getValue()
       })
       .end(this.post_register.bind(this));
-  }
+  };
 
   render() {
     let title = 'Log In';
@@ -84,7 +84,7 @@ class RegisterPage extends React.Component {
         </Paper>
       </div>
     );
-  }
+  };
 
 }
 

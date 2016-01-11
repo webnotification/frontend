@@ -29,7 +29,7 @@ class Header extends React.Component {
         </AppBar>
       </header>
     )
-  }
+  };
 }
 
 export default Header;

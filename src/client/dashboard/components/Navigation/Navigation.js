@@ -23,7 +23,7 @@ class Navigation extends React.Component{
         <a href='/logout' class='Navigation-Link'>Logout</a>
       </div>
     );
-  }
+  };
 }
 
 export default Navigation;

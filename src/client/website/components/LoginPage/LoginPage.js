@@ -26,7 +26,7 @@ class LoginPage extends React.Component {
   state = {
     loading: false,
     error: false
-  }
+  };
 
   post_login(err, res){
     this.setState({
@@ -40,7 +40,7 @@ class LoginPage extends React.Component {
       // router.transitionTo(result.redirect_url, {
       //   user: result.user
       // });
-    }
+    };
   }
 
   submit_login(){

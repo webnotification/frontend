@@ -22,7 +22,7 @@ class ContactPage extends React.Component{
         </div>
       </div>
     );
-  }
+  };
 
 }
 

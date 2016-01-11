@@ -22,19 +22,19 @@ class App extends React.Component {
 
 	static propTypes = {
 		error: PropTypes.object
-	}
+	};
 
 	static childContextTypes = {
 		router: React.PropTypes.func,
 		routeDepth: React.PropTypes.number,
 		muiTheme: React.PropTypes.object
-	}
+	};
 
 	getChildContext() {
 		return {
 			 muiTheme: ThemeManager.getMuiTheme(MyRawTheme),
 		};
-	}
+	};
 
 	render() {
 		let key = this.props.pathname;
@@ -48,7 +48,7 @@ class App extends React.Component {
 				<Footer />
 			</div>
 		) : <RouteHandler/> || this.props.children ;
-	}
+	};
 }
 
 export default App;

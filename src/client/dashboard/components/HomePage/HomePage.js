@@ -9,7 +9,7 @@ import {RaisedButton, FontIcon} from 'material-ui';
 class HomePage extends React.Component {
   static childContextTypes = {
     muiTheme: PropTypes.object
-  }
+  };
 
   render(){
     return (
@@ -21,7 +21,7 @@ class HomePage extends React.Component {
         </div>
       </div>
     )
-  }
+  };
 }
 
 export default HomePage;

@@ -7,7 +7,7 @@ class AppDownload extends React.Component {
 				<h2> AppDownload </h2>
 			</div>
 		)
-	}
+	};
 }
 
 export default AppDownload;
