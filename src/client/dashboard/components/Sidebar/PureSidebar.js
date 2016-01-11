@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 import mui         from 'material-ui';
 import {LeftNav}   from 'material-ui';
@@ -31,7 +31,7 @@ let menuItems = [
 ];
 
 
-class Sidebar {
+class Sidebar extends React.Component{
   render(){
     console.log('S-State: ', this.state);
     console.log('S-Props: ', this.props);

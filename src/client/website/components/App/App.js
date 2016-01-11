@@ -1,7 +1,7 @@
 /*! React Starter Kit | MIT License | http://www.reactstarterkit.com/ */
 
 import React, { PropTypes } from 'react';
-import { CSSTransitionGroup } from 'react/addons';
+import { CSSTransitionGroup } from 'react-addons-css-transition-group';
 import styles from './App.styl';
 import withContext from '../../../decorators/withContext';
 import withStyles from '../../../decorators/withStyles';

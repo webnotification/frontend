@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 import withStyles from '../../../decorators/withStyles';
 import styles from './Header.styl';

@@ -8,7 +8,7 @@ import { Link } from 'react-router';
 
 @withViewport
 @withStyles(styles)
-class Footer {
+class Footer extends React.Component {
 
   static propTypes = {
     viewport: PropTypes.shape({
