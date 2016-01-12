@@ -10,7 +10,7 @@ function send_notification(req, res, next){
                 res.render('dashboard/send_notification', { title: 'Send', website: req.user.website, groups: groups });
         }
         else{
-                res.redirect('../profile/profile');
+                res.redirect('../profile');
         }
     });
 }

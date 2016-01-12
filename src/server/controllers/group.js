@@ -10,7 +10,7 @@ function fetchAll(req, res, next){
                 res.render('dashboard/view_groups', { website: req.user.website, groups: groups});
         }
         else{
-                res.redirect('../profile/profile');
+                res.redirect('../profile');
         }
     });
 }

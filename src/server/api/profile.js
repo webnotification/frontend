@@ -3,6 +3,6 @@ import Controller from '../controllers/profile';
 
 let router = new Router();
 
-router.get('/profile', Controller.profile);
+router.get('/', Controller.profile);
 
 export default router;
