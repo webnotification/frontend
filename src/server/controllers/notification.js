@@ -3,14 +3,15 @@ import config from './../config/dashboard_config';
 
 
 function send_notification(req, res, next){
-    params = {'client_id': req.user.id}
+    let params = {'client_id': req.user.client_id}
     request({url: config.get_groups_url, qs: params}, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-                groups = JSON.parse(body)['groups'];
-                res.render('send_notification.ejs', { title: 'Send', website: req.user.local.website, groups: groups });
-            }
+                let groups = JSON.parse(body)['groups'];
+                res.render('dashboard/send_notification', { title: 'Send', website: req.user.website, groups: groups });
+        }
         else{
-                res.render('profile.ejs');
+                //res.render('profile.ejs');
+                //redirect to profile
         }
     });
 }
