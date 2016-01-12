@@ -10,8 +10,7 @@ function fetchAll(req, res, next){
                 res.render('dashboard/view_groups', { website: req.user.website, groups: groups});
         }
         else{
-                //res.render(template_path + 'profile.jade', {user: test_user, image: test_image, err_msg: ''});
-                //redirect to profile
+                res.redirect('../profile/profile');
         }
     });
 }

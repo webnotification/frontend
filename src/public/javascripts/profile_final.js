@@ -19013,7 +19013,7 @@ var Details = React.createClass({
                     'id'
                 ),
                 ': ',
-                user.id
+                user.client_id
             ),
             React.createElement(
                 'h5',
