@@ -23,7 +23,7 @@ function profile(req, res, next){
         err_msg : err_msg
     };
     var reactHtml = ReactDOMServer.renderToString(<ProfilePage data={data} />);
-    res.render('dashboard/profile', {reactOutput: reactHtml});
+    res.render('profile', {reactOutput: reactHtml});
 }
 
 let stuff = {
