@@ -7,7 +7,8 @@ function fetchAll(req, res, next){
     request({url: config.get_groups_url, qs: params}, function (error, response, body) {
         if (!error && response.statusCode == 200) {
                 var groups = JSON.parse(body)['groups'];
-                res.render('dashboard/view_groups', { website: req.user.website, groups: groups});
+                //res.render('dashboard/view_groups', { website: req.user.website, groups: groups});
+                res.send({ website: req.user.website, groups: groups});
         }
         else{
                 res.redirect('../profile');

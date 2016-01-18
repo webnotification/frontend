@@ -3,10 +3,5 @@ html(lang="en")
     head
         title Profile
     body
-        #main
-            script.
-                var user  = !{JSON.stringify(user)};
-                var image = !{JSON.stringify(image)};
-                var err_msg = !{JSON.stringify(err_msg)};
-            script(src='/javascripts/profile_final.js')
+        !{reactOutput}
 
