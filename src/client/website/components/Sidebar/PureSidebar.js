@@ -40,7 +40,7 @@ class Sidebar extends React.Component{
         docked={this.props.isDocked}
         menuItems={menuItems} />
     );
-  }
+  };
 }
 
 export default Sidebar;

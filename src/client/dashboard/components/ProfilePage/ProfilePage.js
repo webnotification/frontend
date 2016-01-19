@@ -7,7 +7,7 @@ import styles from './ProfilePage.styl';
 class ProfilePage extends React.Component {
   static childContextTypes = {
     muiTheme: PropTypes.object
-  }
+  };
   render(){
     return (
       <div className='ProfilePage'>
@@ -18,7 +18,7 @@ class ProfilePage extends React.Component {
         </div>
       </div>
     )
-  }
+  };
 }
 
 export default ProfilePage;
