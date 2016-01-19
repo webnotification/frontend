@@ -1,11 +1,8 @@
 import request from 'request';
-import config from './../config/dashboard_config';
-
 import React from 'react';
-import ProfilePage from './../../client/dashboard/components/ProfilePage/ProfilePage';
 import ReactDOMServer from 'react-dom/server';
-
-var ReactApp = React.createFactory(ProfilePage);
+import config from './../config/dashboard_config';
+import ProfilePage from './../../client/dashboard/components/ProfilePage/ProfilePage';
 
 function profile(req, res, next){
     var err_msg = '';

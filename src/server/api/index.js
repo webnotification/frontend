@@ -8,7 +8,7 @@ let router = new Router();
 
 
 router.use('/user', userRouter);
-router.use('/group', groupRouter);
+router.use('/groups', groupRouter);
 router.use('/notification', notificationRouter);
 router.use('/profile', profileRouter);
 

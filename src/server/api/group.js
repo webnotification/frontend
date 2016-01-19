@@ -3,6 +3,6 @@ import Controller from '../controllers/group';
 
 let router = new Router();
 
-router.get('/list', Controller.list);
+router.get('/view', Controller.list);
 
 export default router;
