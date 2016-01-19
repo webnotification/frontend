@@ -10,8 +10,10 @@ block styles
     href="https://fonts.googleapis.com/icon?family=Material+Icons"
     rel="stylesheet"
   )
+
 block scripts
   script(type='text/javascript', src='/dashboard/app.js')
 
 block content
+  !{reactOutput}
   #app!= body

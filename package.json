@@ -10,6 +10,7 @@
     "alt": "^0.18.1",
     "axis": "^0.5.2",
     "babel-preset-stage-2": "^6.3.13",
+    "babelify": "^7.2.0",
     "bcrypt": "^0.8.5",
     "bluebird": "^3.0.5",
     "body-parser": "^1.14.1",
