@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
-import styles from './GroupsPage.styl';
+import styles from './ViewGroupsPage.styl';
 import withStyles from '../../../decorators/withStyles';
 import request from 'superagent';
 import {Link} from 'react-router'
 import router from '../../router';
 
 
-class GroupsPage extends React.Component {
+class ViewGroupsPage extends React.Component {
   render() {
     
     var group_names = this.props.data.groups.map(function(group){
@@ -28,4 +28,4 @@ class GroupsPage extends React.Component {
   };
 }
 
-export default GroupsPage;
+export default ViewGroupsPage;

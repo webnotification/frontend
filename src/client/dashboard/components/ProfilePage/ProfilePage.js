@@ -28,7 +28,7 @@ class FileSelector extends React.Component{
                 </div>
                 <form id="uploadForm"
                       encType="multipart/form-data"
-                      action="/upload_image"
+                      action="/api/image/upload"
                       method="post">
                   <input type="file" name="userPhoto"></input>
                   <input type="submit" value="Upload Image" name="submit"></input>
@@ -50,10 +50,10 @@ class Details extends React.Component{
                 <h5><strong>website</strong>: {user.website} </h5>
                 <h4><a href="/api/permission/send"> send permission request </a></h4>
                 <h4><a href="/api/notification/send"> send notification </a></h4>
-                <h4><a href="/create_group"> create group</a></h4>
+                <h4><a href="/api/groups/create"> create group</a></h4>
                 <h4><a href="/api/groups/view"> view groups</a></h4>
-                <h4><a href="/notification_analytics"> notification analytics</a></h4>
-                <h4><a href="/permission_analytics"> permission analytics</a></h4>
+                <h4><a href="/api/analytics/notification"> notification analytics</a></h4>
+                <h4><a href="/api/analytics/permission"> permission analytics</a></h4>
                 <h4><a href="/logout">logout</a></h4>
             </div>
         );

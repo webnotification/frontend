@@ -15,7 +15,7 @@ class NotificationPage extends React.Component {
     return (
     <div>
         <h2> Send Message </h2>
-        <form name="send_message" action="/send_notification"  method="post">
+        <form name="send_message" action="/api/notification/send"  method="post">
             <div>
                 <label>Website</label>
                 <input name="website" type="text" value={this.props.data.website}></input>
