@@ -48,7 +48,7 @@ class Details extends React.Component{
                 <h5><strong>id</strong>: {user.client_id}</h5>
                 <h5><strong>email</strong>: {user.email} </h5>
                 <h5><strong>website</strong>: {user.website} </h5>
-                <h4><a href="/send_permission_request"> send permission request </a></h4>
+                <h4><a href="/api/permission/send"> send permission request </a></h4>
                 <h4><a href="/api/notification/send"> send notification </a></h4>
                 <h4><a href="/create_group"> create group</a></h4>
                 <h4><a href="/api/groups/view"> view groups</a></h4>
