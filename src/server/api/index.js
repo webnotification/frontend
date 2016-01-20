@@ -6,16 +6,18 @@ import permissionRouter from './permission';
 import profileRouter from './profile';
 import analyticsRouter from './analytics';
 import imageRouter from './image';
+import auth from './../controllers/auth';
 
 let router = new Router();
 
 
 router.use('/user', userRouter);
-router.use('/groups', groupRouter);
-router.use('/notification', notificationRouter);
-router.use('/permission', permissionRouter);
-router.use('/profile', profileRouter);
-router.use('/analytics', analyticsRouter);
-router.use('/image', imageRouter);
+
+router.use('/profile', auth.ensure, profileRouter);
+router.use('/image', auth.ensure, imageRouter);
+router.use('/groups', auth.ensure, groupRouter);
+router.use('/notification', auth.ensure, notificationRouter);
+router.use('/permission', auth.ensure, permissionRouter);
+router.use('/analytics', auth.ensure, analyticsRouter);
 
 export default router;
