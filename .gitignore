@@ -6,4 +6,6 @@ node_modules
 npm-debug.log
 .DS_Store
 *.swp
+uploads
+git_script.sh
 notif.sublime-workspace

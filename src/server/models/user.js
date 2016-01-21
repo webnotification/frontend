@@ -3,6 +3,10 @@ import mongoose, {Schema} from 'mongoose';
 import passportLocalMongoose from 'passport-local-mongoose';
 
 let UserSchema = new Schema({
+  client_id: {
+    type: String,
+    required: true
+  },
   name: {
     type: String,
     required: true
