@@ -8,7 +8,7 @@ function profile(req, res, next){
     var err_msg = '';
     var data = {
         user : req.user,
-        image : config.NOTIFICATION_IMAGE_BASE_PATH + req.user.id,
+        image : config.NOTIFICATION_IMAGE_BASE_PATH + req.user.client_id,
         err_msg : err_msg
     };
     var reactHtml = ReactDOMServer.renderToString(<ProfilePage data={data} />);
