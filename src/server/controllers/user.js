@@ -9,9 +9,7 @@ let createOne = (req, res, next)=>{
         if (!error && response.statusCode == 200) {
                 var data = {
                     client_id: JSON.parse(body).client_id,
-                    name: req.body.name,
-                    company: req.body.company,
-                    email: req.body.email,
+                    username: req.body.username,
                     website: req.body.website,
                     is_verified: true,
                     created_at: (new Date()).toISOString()

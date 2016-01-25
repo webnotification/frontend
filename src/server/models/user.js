@@ -7,18 +7,9 @@ let UserSchema = new Schema({
     type: String,
     required: true
   },
-  name: {
+  username: {
     type: String,
     required: true
-  },
-  company: {
-    type: String,
-    required: true
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
   },
   website: {
     type: String,
@@ -29,7 +20,7 @@ let UserSchema = new Schema({
   created_at : Date
 });
 
-UserSchema.plugin(passportLocalMongoose, {usernameField:'email', usernameQueryFields: ['email']});
+UserSchema.plugin(passportLocalMongoose, {usernameField:'username', usernameQueryFields: ['username']});
 var User = mongoose.model('User', UserSchema);
 
 export default User;

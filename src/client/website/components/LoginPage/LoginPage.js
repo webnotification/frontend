@@ -57,7 +57,7 @@ class LoginPage extends React.Component {
       .post(url)
       .accept('json')
       .send({
-        email: this.refs.email.getValue(),
+        username: this.refs.username.getValue(),
         password: this.refs.password.getValue()
       })
       .end(this.post_login.bind(this));
@@ -83,7 +83,7 @@ class LoginPage extends React.Component {
       <div className="LoginPage">
         <Paper className="LoginPage-container form-container">
           { banner }
-          <TextField ref='email' className='form-field login-email' hintText='Username' floatingLabelText='Your Email'/>
+          <TextField ref='username' className='form-field login-email' hintText='username' floatingLabelText='Username'/>
           <TextField ref='password' className='form-field login-password' hintText='Password' floatingLabelText='Password' type='password'/>
           {loginButton}
           <Link className='link-register' to='register'> Register </Link>

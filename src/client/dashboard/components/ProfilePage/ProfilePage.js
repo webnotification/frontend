@@ -45,8 +45,7 @@ class Details extends React.Component{
     return (
             <div>
                 <h2> Profile </h2>
-                <h5><strong>id</strong>: {user.client_id}</h5>
-                <h5><strong>email</strong>: {user.email} </h5>
+                <h5><strong>username</strong>: {user.username}</h5>
                 <h5><strong>website</strong>: {user.website} </h5>
                 <h4><a href="/dashboard/permission/send"> send permission request </a></h4>
                 <h4><a href="/dashboard/notification/send"> send notification </a></h4>
