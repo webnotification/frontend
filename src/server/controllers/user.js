@@ -4,7 +4,6 @@ import request from 'request';
 let User = mongoose.model('User');
 
 let createOne = (req, res, next)=>{
- 
     request({url: config.generate_client_id_url}, function (error, response, body) {
         if (!error && response.statusCode == 200) {
                 var data = {

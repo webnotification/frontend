@@ -5,11 +5,13 @@ import passportLocalMongoose from 'passport-local-mongoose';
 let UserSchema = new Schema({
   client_id: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   username: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   website: {
     type: String,
