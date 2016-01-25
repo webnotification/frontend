@@ -1,14 +1,14 @@
 import Renderer from './helpers/renderer';
 // import website_routes from '../client/routes';
 import website_routes from '../client/website/routes';
-import dashboard_routes from '../client/dashboard/routes';
+// import dashboard_routes from '../client/dashboard/routes';
 import apiRouter from './api';
 import auth from './controllers/auth';
 import passport from './helpers/passport';
 import UserController from './controllers/user';
 
 let webapp = new Renderer({website_routes});
-let dashboard_app = new Renderer({dashboard_routes});
+// let dashboard_app = new Renderer({dashboard_routes});
 
 let indexPage = (req, res, next)=>{
   if (req.query.nobackend == 1){
@@ -22,15 +22,8 @@ let indexPage = (req, res, next)=>{
 };
 
 let dashboardPage = (req, res, next)=>{
-  auth.ensure(req, res, next);
-  if (req.query.nobackend == 1){
-    res.render('dashboard/index', {});
-  }
-  else {
-    dashboard_app.render(req.path)
-      .then( data => { res.render('dashboard/index', data) })
-      .catch( err => { next(err) });
-  }
+  // auth.ensure(req, res, next);
+  res.render('dashboard/index', {});
 };
 
 // Main AppRouter
