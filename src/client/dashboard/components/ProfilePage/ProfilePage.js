@@ -18,24 +18,24 @@ class NotificationImage extends React.Component{
 
 class FileSelector extends React.Component{
     render(){
-    return(
-            <div>
+        return(
                 <div>
-                    <label>Upload Image</label>
+                    <div>
+                        <label>Upload Image</label>
+                    </div>
+                    <div>
+                        <label><font color="red">{this.props.err_msg}</font></label>
+                    </div>
+                    <form id="uploadForm"
+                          encType="multipart/form-data"
+                          action="/api/image/upload"
+                          method="post">
+                      <input type="file" name="userPhoto"></input>
+                      <input type="submit" value="Upload Image" name="submit" ></input>
+                      <span id = "status"></span>
+                    </form>
                 </div>
-                <div>
-                    <label><font color="red">{this.props.err_msg}</font></label>
-                </div>
-                <form id="uploadForm"
-                      encType="multipart/form-data"
-                      action="/api/image/upload"
-                      method="post">
-                  <input type="file" name="userPhoto"></input>
-                  <input type="submit" value="Upload Image" name="submit"></input>
-                  <span id = "status"></span>
-                </form>
-            </div>
-            )
+            );
     }
 }
 
