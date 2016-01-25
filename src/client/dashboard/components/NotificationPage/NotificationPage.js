@@ -15,7 +15,7 @@ class NotificationPage extends React.Component {
     return (
     <div>
         <h2> Send Message </h2>
-        <form name="send_message" action="/api/notification/send"  method="post">
+        <form name="send_message" action="/dashboard/notification/send"  method="post">
             <div>
                 <label>Website</label>
                 <input name="website" type="text" value={this.props.data.website}></input>
@@ -48,8 +48,8 @@ class NotificationPage extends React.Component {
                 <input type="submit" value="Send"></input>
             </div>
         </form>
-        <form action="javascript:history.back()" method="get">
-            <button>Back</button>
+        <form action="/dashboard/profile" method="get">
+            <button>Profile</button>
         </form>
     </div>
     )

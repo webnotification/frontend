@@ -28,7 +28,7 @@ class FileSelector extends React.Component{
                     </div>
                     <form id="uploadForm"
                           encType="multipart/form-data"
-                          action="/api/image/upload"
+                          action="/dashboard/image/upload"
                           method="post">
                       <input type="file" name="userPhoto"></input>
                       <input type="submit" value="Upload Image" name="submit" ></input>
@@ -48,12 +48,12 @@ class Details extends React.Component{
                 <h5><strong>id</strong>: {user.client_id}</h5>
                 <h5><strong>email</strong>: {user.email} </h5>
                 <h5><strong>website</strong>: {user.website} </h5>
-                <h4><a href="/api/permission/send"> send permission request </a></h4>
-                <h4><a href="/api/notification/send"> send notification </a></h4>
-                <h4><a href="/api/groups/create"> create group</a></h4>
-                <h4><a href="/api/groups/view"> view groups</a></h4>
-                <h4><a href="/api/analytics/notification"> notification analytics</a></h4>
-                <h4><a href="/api/analytics/permission"> permission analytics</a></h4>
+                <h4><a href="/dashboard/permission/send"> send permission request </a></h4>
+                <h4><a href="/dashboard/notification/send"> send notification </a></h4>
+                <h4><a href="/dashboard/groups/create"> create group</a></h4>
+                <h4><a href="/dashboard/groups/view"> view groups</a></h4>
+                <h4><a href="/dashboard/analytics/notification"> notification analytics</a></h4>
+                <h4><a href="/dashboard/analytics/permission"> permission analytics</a></h4>
                 <h4><a href="/logout">logout</a></h4>
             </div>
         );

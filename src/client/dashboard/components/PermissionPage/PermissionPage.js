@@ -15,7 +15,7 @@ class PermissionPage extends React.Component {
         return(
             <div>
                 <h2> Send Permission Request </h2>
-                <form name="send_permission_request" action="/api/permission/send"  method="post">
+                <form name="send_permission_request" action="/dashboard/permission/send"  method="post">
                     <div>
                         <label>Website</label>
                         <input name="website" type="text" value={this.props.data.website} readOnly></input>
@@ -30,8 +30,8 @@ class PermissionPage extends React.Component {
                         <input type="submit" value="Send"></input>
                     </div>
                 </form>
-                <form action="javascript:history.back()" method="get">
-                    <button>Back</button>
+                <form action="/dashboard/profile" method="get">
+                    <button>Profile</button>
                 </form>
             </div>
         );
