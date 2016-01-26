@@ -5,7 +5,6 @@ import request from 'superagent';
 import {Link} from 'react-router'
 import router from '../../router';
 
-
 class NotificationImage extends React.Component{
     render(){
     return(
@@ -39,6 +38,7 @@ class FileSelector extends React.Component{
     }
 }
 
+@withStyles(styles)
 class Details extends React.Component{
     render(){
     var user = this.props.user;
@@ -58,14 +58,11 @@ class Details extends React.Component{
         );
     }
 }
-
 class ProfilePage extends React.Component {
   render() {
     return (
       <div className="ProfilePage">
-        <Details user={this.props.data.user} />
-        <NotificationImage image={this.props.data.image} />
-        <FileSelector err_msg={this.props.data.err_msg} />
+        <Details/>
       </div>
     );
   };
