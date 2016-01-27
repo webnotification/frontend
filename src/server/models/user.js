@@ -5,20 +5,13 @@ import passportLocalMongoose from 'passport-local-mongoose';
 let UserSchema = new Schema({
   client_id: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
-  name: {
-    type: String,
-    required: true
-  },
-  company: {
-    type: String,
-    required: true
-  },
-  email: {
+  username: {
     type: String,
     required: true,
-    unique: true,
+    unique: true
   },
   website: {
     type: String,
@@ -29,7 +22,7 @@ let UserSchema = new Schema({
   created_at : Date
 });
 
-UserSchema.plugin(passportLocalMongoose, {usernameField:'email', usernameQueryFields: ['email']});
+UserSchema.plugin(passportLocalMongoose, {usernameField:'username', usernameQueryFields: ['username']});
 var User = mongoose.model('User', UserSchema);
 
 export default User;

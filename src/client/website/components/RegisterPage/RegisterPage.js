@@ -45,10 +45,8 @@ class RegisterPage extends React.Component {
       .post('/register')
       .accept('json')
       .send({
-        name : this.refs.name.getValue(),
-        company: this.refs.company.getValue(),
-        email: this.refs.email.getValue(),
-        website: this.refs.website.getValue(),
+        username: this.refs.username.getValue(),
+        website:  this.refs.website.getValue(),
         password: this.refs.password.getValue()
       })
       .end(this.post_register.bind(this));
@@ -74,13 +72,10 @@ class RegisterPage extends React.Component {
       <div className="RegisterPage">
         <Paper className="RegisterPage-container form-container">
           { banner }
-          <TextField ref='name' className='form-field login-name' hintText='Fullname'/>
-          <TextField ref='company' className='form-field login-company' hintText='Company'/>
-          <TextField ref='email'    className='form-field login-email'    hintText='Email' />
-          <TextField ref='website'    className='form-field login-website'    hintText='Website' />
-          <TextField ref='password' className='form-field login-password' hintText='Password' type='password'/>
+          <TextField ref='username'   className='form-field login-username'    hintText='Username' />
+          <TextField ref='password'   className='form-field login-password'    hintText='Password' type='password'/>
+          <TextField ref='website'    className='form-field login-website'     hintText='Website' />
           {registerButton}
-          <Link className='link-register' to='register'> Register </Link>
         </Paper>
       </div>
     );

@@ -3,6 +3,7 @@ import Renderer from './helpers/renderer';
 import website_routes from '../client/website/routes';
 // import dashboard_routes from '../client/dashboard/routes';
 import apiRouter from './api';
+import dashboardRouter from './dashboard';
 import auth from './controllers/auth';
 import passport from './helpers/passport';
 import UserController from './controllers/user';

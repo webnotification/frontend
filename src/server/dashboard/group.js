@@ -3,7 +3,7 @@ import Controller from '../controllers/group';
 
 let router = new Router();
 
-router.get('/list', Controller.list);
+router.get('/view', Controller.list);
 router.get('/create', Controller.create);
 router.post('/create', Controller.createOnBackend);
 
