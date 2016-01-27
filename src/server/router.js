@@ -23,7 +23,6 @@ let indexPage = (req, res, next)=>{
 };
 
 let dashboardPage = (req, res, next)=>{
-  // auth.ensure(req, res, next);
   res.render('dashboard/index', {});
 };
 
@@ -40,8 +39,7 @@ let appRouter = (server)=>{
   server.use('/api', apiRouter);
 
   //server.get('/profile', userProfile);
-  server.get('/dashboard/*', dashboardPage)
-  //server.use('/dashboard', dashboardRouter);
+  server.get('/dashboard/*', auth.ensure, dashboardPage)
   server.get('*', indexPage);
 }
 
