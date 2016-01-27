@@ -10,7 +10,7 @@ import auth from './../controllers/auth';
 let router = new Router();
 
 
-router.use('/profile', auth.ensure, profileRouter);
+//router.use('/profile', auth.ensure, profileRouter);
 router.use('/image', auth.ensure, imageRouter);
 router.use('/groups', auth.ensure, groupRouter);
 router.use('/notification', auth.ensure, notificationRouter);

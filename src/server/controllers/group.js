@@ -11,12 +11,13 @@ function list(req, res, next){
         if (!error && response.statusCode == 200) {
                 var groups = JSON.parse(body)['groups'];
                 var data = {website: req.user.website, groups:groups};
-                var reactHtml = ReactDOMServer.renderToString(<ViewGroupsPage data={data} />);
-                res.render('dashboard/index', {reactOutput: reactHtml});
+                res.send(data);
+                //var reactHtml = ReactDOMServer.renderToString(<ViewGroupsPage data={data} />);
+                //res.render('dashboard/index', {reactOutput: reactHtml});
         }
-        else{
-                res.redirect('../profile');
-        }
+        //else{
+                //res.redirect('../profile');
+        //}
     });
 };
 
