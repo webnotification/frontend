@@ -1,44 +1,17 @@
 import React from 'react';
-
-import mui         from 'material-ui';
 import {LeftNav}   from 'material-ui';
-
-import { SubheaderMenuItem, LinkMenuItem } from 'material-ui/lib/menu/index';
-
-// New Menus need to be required like this
+import { Link } from 'react-router';
 import MenuItem  from  'material-ui/lib/menus/menu-item';
-
-
-let menuItems = [
-  { route: 'Dashboard', text: 'Home' },
-  { route: 'Notifications', text: 'About' },
-  { route: 'Analytics', text: 'Profile' },
-  {
-     type: SubheaderMenuItem,
-     payload: 'https://github.com/callemall/material-ui',
-     text: 'GitHub'
-  },
-  {
-     text: 'Disabled',
-     disabled: true
-  },
-  {
-     type: LinkMenuItem,
-     payload: 'https://www.google.com',
-     text: 'Disabled Link',
-     disabled: true
-  },
-];
 
 
 class Sidebar extends React.Component{
   render(){
-    console.log('S-State: ', this.state);
-    console.log('S-Props: ', this.props);
     return (
-      <LeftNav
-        docked={this.props.isDocked}
-        menuItems={menuItems} />
+      <LeftNav docked={this.props.isDocked}>
+        <MenuItem linkButton={true} containerElement={<Link to="/dashboard/" />} primaryText="Dashboard" />
+        <MenuItem linkButton={true} containerElement={<Link to="/dashboard/analytics" />} primaryText="Analytics" />
+        <MenuItem linkButton={true} containerElement={<Link to="/dashboard/profile" />} primaryText="Profile" />
+      </LeftNav>
     );
   };
 }

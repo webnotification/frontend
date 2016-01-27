@@ -42,6 +42,7 @@ class App extends React.Component {
 		return !this.props.error ? (
 			<div className='app-container'>
 				<Header/>
+				<Sidebar/>
 				<div className='app-content'>
 					<RouteHandler/>
 				</div>
