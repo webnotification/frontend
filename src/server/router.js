@@ -38,10 +38,10 @@ let appRouter = (server)=>{
   server.post('/register', UserController.create);
 
   server.use('/api', apiRouter);
-  server.use('/dashboard', dashboardRouter);
 
   //server.get('/profile', userProfile);
   server.get('/dashboard/*', dashboardPage)
+  //server.use('/dashboard', dashboardRouter);
   server.get('*', indexPage);
 }
 

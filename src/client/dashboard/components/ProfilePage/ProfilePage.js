@@ -4,68 +4,38 @@ import withStyles from '../../../decorators/withStyles';
 import request from 'superagent';
 import {Link} from 'react-router'
 import router from '../../router';
+import Details from './Details';
+import NotificationImage from './NotificationImage';
+import FileSelector from './FileSelector';
 
-class NotificationImage extends React.Component{
-    render(){
-    return(
-            <div>
-                <img src={this.props.image}></img>
-            </div>
-            );
-    }
-}
-
-class FileSelector extends React.Component{
-    render(){
-        return(
-                <div>
-                    <div>
-                        <label>Upload Image</label>
-                    </div>
-                    <div>
-                        <label><font color="red">{this.props.err_msg}</font></label>
-                    </div>
-                    <form id="uploadForm"
-                          encType="multipart/form-data"
-                          action="/dashboard/image/upload"
-                          method="post">
-                      <input type="file" name="userPhoto"></input>
-                      <input type="submit" value="Upload Image" name="submit" ></input>
-                      <span id = "status"></span>
-                    </form>
-                </div>
-            );
-    }
-}
 
 @withStyles(styles)
-class Details extends React.Component{
-    render(){
-    var user = this.props.user;
-    return (
-            <div>
-                <h2> Profile </h2>
-                <h5><strong>username</strong>: {user.username}</h5>
-                <h5><strong>website</strong>: {user.website} </h5>
-                <h4><a href="/dashboard/permission/send"> send permission request </a></h4>
-                <h4><a href="/dashboard/notification/send"> send notification </a></h4>
-                <h4><a href="/dashboard/groups/create"> create group</a></h4>
-                <h4><a href="/dashboard/groups/view"> view groups</a></h4>
-                <h4><a href="/dashboard/analytics/notification"> notification analytics</a></h4>
-                <h4><a href="/dashboard/analytics/permission"> permission analytics</a></h4>
-                <h4><a href="/logout">logout</a></h4>
-            </div>
-        );
-    }
-}
 class ProfilePage extends React.Component {
-  render() {
-    return (
-      <div className="ProfilePage">
-        <Details/>
-      </div>
-    );
-  };
+    constructor(props) {
+        super(props);
+        this.state = { data: null };
+    };
+    
+    componentDidMount() {
+        request.get('/api/user/me').end(function(err, res){
+            console.log(JSON.parse(res.text).result);
+            var data = JSON.parse(res.text).result;
+            this.setState({data:data});
+        }.bind(this));
+    };
+
+    render() {
+        if(this.state.data){
+            return (
+              <div className="ProfilePage">
+                <Details user={this.state.data.user}/>
+                <NotificationImage image={this.state.data.image}/>
+                <FileSelector />
+              </div>
+            );
+        }
+        return <div>Loading...</div>;
+    }
 }
 
 export default ProfilePage;

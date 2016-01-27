@@ -3,6 +3,7 @@ import {omit} from 'lodash';
 import {Router} from 'express';
 import mongoose from 'mongoose';
 import passport from '../helpers/passport';
+import config from './../config/dashboard_config';
 
 var router = new Router();
 var User = mongoose.model('User');
@@ -110,9 +111,15 @@ var deleteUser = function(req, res, next){
 
 var getCurrent = function(req, res, next){
   if (req.isAuthenticated())
-    res.json({ status: 'ok' , result: req.user})
+  {
+    var data = {
+        user : req.user,
+        image : config.NOTIFICATION_IMAGE_BASE_PATH + req.user.client_id,
+    };
+    res.json({ status: 'ok' , result: data});
+  }
   else
-    res.sendStatus(403)
+    res.sendStatus(403);
 }
 
 router.get('/list',  listUsers);
