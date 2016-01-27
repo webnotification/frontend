@@ -7,53 +7,69 @@ import router from '../../router';
 
 
 class NotificationPage extends React.Component {
-  render() {
-    var group_options = this.props.data.groups.map(function(group){
-        return <option value= {group.id} > {group.name}({group.percentage}) </option>;
-    });
+    constructor(props) {
+        super(props);
+        this.state = { data: null };
+    };
     
-    return (
-    <div>
-        <h2> Send Message </h2>
-        <form name="send_message" action="/dashboard/notification/send"  method="post">
+    componentDidMount() {
+        request.get('/api/group/list').end(function(err, res){
+            console.log(JSON.parse(res.text));
+            var data = JSON.parse(res.text);
+            this.setState({data:data});
+        }.bind(this));
+    };
+
+    render() {
+        if(this.state.data){
+            var group_options = this.state.data.groups.map(function(group){
+                return <option value= {group.id} > {group.name}({group.percentage}) </option>;
+            });
+            
+            return (
             <div>
-                <label>Website</label>
-                <input name="website" type="text" value={this.props.data.website}></input>
+                <h2> Send Message </h2>
+                <form name="send_message" action="/dashboard/notification/send"  method="post">
+                    <div>
+                        <label>Website</label>
+                        <input name="website" type="text" value={this.state.data.website}></input>
+                    </div>
+                    <div>
+                        <label>Group</label>
+                        <select name="group_id">{group_options}</select> 
+                    </div>
+                    <div> 
+                        <label>Title</label>
+                        <input name="title"  type="text"  width="400px"></input>
+                    </div>
+                    <div>
+                        <label>Message</label>
+                        <textarea name="message" type="description"></textarea>
+                    </div>
+                    <div>
+                        <label>Target URL</label>
+                        <input name="target_url" type="text"></input>
+                    </div>
+                    <div>
+                        <label>Date</label>
+                        <input type="date" name="date"></input>
+                    </div>
+                    <div>
+                        <label>Time</label>
+                        <input type="time" name="time"></input>
+                    </div>
+                    <div>
+                        <input type="submit" value="Send"></input>
+                    </div>
+                </form>
+                <form action="/dashboard/profile" method="get">
+                    <button>Profile</button>
+                </form>
             </div>
-            <div>
-                <label>Group</label>
-                <select name="group_id">{group_options}</select> 
-            </div>
-            <div> 
-                <label>Title</label>
-                <input name="title"  type="text"  width="400px"></input>
-            </div>
-            <div>
-                <label>Message</label>
-                <textarea name="message" type="description"></textarea>
-            </div>
-            <div>
-                <label>Target URL</label>
-                <input name="target_url" type="text"></input>
-            </div>
-            <div>
-                <label>Date</label>
-                <input type="date" name="date"></input>
-            </div>
-            <div>
-                <label>Time</label>
-                <input type="time" name="time"></input>
-            </div>
-            <div>
-                <input type="submit" value="Send"></input>
-            </div>
-        </form>
-        <form action="/dashboard/profile" method="get">
-            <button>Profile</button>
-        </form>
-    </div>
-    )
-  };
+            );
+        }
+        return <div>Loading...</div>;
+      };
 }
 
 export default NotificationPage;
