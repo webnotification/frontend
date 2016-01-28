@@ -44,9 +44,6 @@ class PermissionPage extends React.Component {
                             <input type="submit" value="Send"></input>
                         </div>
                     </form>
-                    <form action="/dashboard/profile" method="get">
-                        <button>Profile</button>
-                    </form>
                 </div>
             );
         }

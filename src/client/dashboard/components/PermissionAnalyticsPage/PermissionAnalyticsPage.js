@@ -28,7 +28,7 @@ class PermissionAnalyticsPage extends React.Component {
                     tableClassName="table" 
                     showFilter={true}
                     showSettings={true} 
-                    columns={["title", "group", "target_url", "timestamp", "accept", "reject"]}
+                    columns={["group", "timestamp", "accept", "reject"]}
                     resultsPerPage={20} 
                 />  
             );

@@ -13,7 +13,6 @@ class Details extends React.Component{
                         <h4><a href="/dashboard/groups/view"> view groups</a></h4>
                         <h4><a href="/dashboard/analytics/notification"> notification analytics</a></h4>
                         <h4><a href="/dashboard/analytics/permission"> permission analytics</a></h4>
-                        <h4><a href="/logout">logout</a></h4>
                     </div>
             );
     };

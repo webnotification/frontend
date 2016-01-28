@@ -33,9 +33,6 @@ class ViewGroupsPage extends React.Component {
                 <ol>
                     {group_names}
                 </ol>
-                <form action="/dashboard/profile" method="get">
-                    <button>Profile</button>
-                </form>
             </div>
         );
     }
