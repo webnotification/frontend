@@ -8,7 +8,7 @@ class FileSelector extends React.Component{
                     </div>
                     <form id="uploadForm"
                           encType="multipart/form-data"
-                          action="/dashboard/image/upload"
+                          action="/api/image/upload"
                           method="post">
                       <input type="file" name="userPhoto"></input>
                       <input type="submit" value="Upload Image" name="submit" ></input>

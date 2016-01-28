@@ -12,20 +12,9 @@ function list(req, res, next){
                 var groups = JSON.parse(body)['groups'];
                 var data = {website: req.user.website, groups:groups};
                 res.send(data);
-                //var reactHtml = ReactDOMServer.renderToString(<ViewGroupsPage data={data} />);
-                //res.render('dashboard/index', {reactOutput: reactHtml});
         }
-        //else{
-                //res.redirect('../profile');
-        //}
     });
 };
-
-//function create(req, res, next){
-    //var data = {website: req.user.website, err_msg:''};
-    //var reactHtml = ReactDOMServer.renderToString(<CreateGroupsPage data={data} />);
-    //res.render('dashboard/index', {reactOutput: reactHtml});
-//};
 
 function create(req, res, next){
     let params = req.body;
@@ -45,7 +34,6 @@ function create(req, res, next){
 let stuff = {
   list: list,
   create: create
-  //createOnBackend: createOnBackend  
 };
 
 export default stuff;

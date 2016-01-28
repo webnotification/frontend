@@ -48,6 +48,21 @@ let createOne = (req, res, next)=>{
     });
 }
 
+var getCurrent = function(req, res, next){
+  if (req.isAuthenticated())
+  {
+    var data = {
+        user : req.user,
+        image : config.NOTIFICATION_IMAGE_BASE_PATH + req.user.client_id,
+    };
+    res.json({ status: 'ok' , result: data});
+  }
+  else
+    res.sendStatus(403);
+}
+
+
 export default {
-  create: createOne
+  create: createOne,
+  me: getCurrent
 }

@@ -42,7 +42,7 @@ class RegisterPage extends React.Component {
   submit_register(){
     this.setState({loading: true});
     request
-      .post('/register')
+      .post('/api/user/register')
       .accept('json')
       .send({
         username: this.refs.username.getValue(),
