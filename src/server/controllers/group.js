@@ -21,13 +21,13 @@ function list(req, res, next){
     });
 };
 
-function create(req, res, next){
-    var data = {website: req.user.website, err_msg:''};
-    var reactHtml = ReactDOMServer.renderToString(<CreateGroupsPage data={data} />);
-    res.render('dashboard/index', {reactOutput: reactHtml});
-};
+//function create(req, res, next){
+    //var data = {website: req.user.website, err_msg:''};
+    //var reactHtml = ReactDOMServer.renderToString(<CreateGroupsPage data={data} />);
+    //res.render('dashboard/index', {reactOutput: reactHtml});
+//};
 
-function createOnBackend(req, res, next){
+function create(req, res, next){
     let params = req.body;
     params['client_id'] = req.user.client_id;
     request({url: config.generate_group_url, qs: params}, function (error, response, body) {
@@ -44,8 +44,8 @@ function createOnBackend(req, res, next){
 
 let stuff = {
   list: list,
-  create: create,
-  createOnBackend: createOnBackend  
+  create: create
+  //createOnBackend: createOnBackend  
 };
 
 export default stuff;

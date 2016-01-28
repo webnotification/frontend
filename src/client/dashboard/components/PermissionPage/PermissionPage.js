@@ -29,7 +29,7 @@ class PermissionPage extends React.Component {
             return(
                 <div>
                     <h2> Send Permission Request </h2>
-                    <form name="send_permission_request" action="/dashboard/permission/send"  method="post">
+                    <form name="send_permission_request" action="/api/permission/send"  method="post">
                         <div>
                             <label>Website</label>
                             <input name="website" type="text" value={this.state.data.website} readOnly></input>

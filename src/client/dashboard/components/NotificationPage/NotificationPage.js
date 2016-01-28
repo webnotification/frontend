@@ -29,7 +29,7 @@ class NotificationPage extends React.Component {
             return (
             <div>
                 <h2> Send Message </h2>
-                <form name="send_message" action="/dashboard/notification/send"  method="post">
+                <form name="send_message" action="/api/notification/send"  method="post">
                     <div>
                         <label>Website</label>
                         <input name="website" type="text" value={this.state.data.website}></input>

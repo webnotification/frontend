@@ -24,7 +24,7 @@ class CreateGroupsPage extends React.Component {
             return( 
                 <div>
                     <h2> Send Message </h2>
-                    <form name="send_message" action="/dashboard/groups/create"  method="post">
+                    <form name="send_message" action="/api/group/create"  method="post">
                         <div>
                             <label>Website</label>
                             <input name="website" type="text" value={this.state.data.website} readOnly></input>
