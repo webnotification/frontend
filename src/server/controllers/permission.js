@@ -17,7 +17,7 @@ function send(req, res, next){
             }
         }
     );
-    res.send('Permission Sent');
+    res.redirect('/dashboard/permission/send');
 }
 
 let stuff = {

@@ -17,7 +17,7 @@ function send(req, res, next){
                 }
             }
         );
-        res.redirect('/dashboard/profile');
+        res.redirect('/dashboard/notification/send');
 }
 
 let stuff = {
