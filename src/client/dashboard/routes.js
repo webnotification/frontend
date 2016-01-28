@@ -7,6 +7,7 @@ import NotificationPage from './components/NotificationPage';
 import CreateGroupsPage from './components/CreateGroupsPage';
 import ViewGroupsPage from './components/ViewGroupsPage';
 import NotificationAnalyticsPage from './components/NotificationAnalyticsPage';
+import PermissionAnalyticsPage from './components/PermissionAnalyticsPage';
 
 const routes = (
   <Route name='dashboard' path='/dashboard/' handler={App}>
@@ -16,6 +17,7 @@ const routes = (
   	<Route path='groups/create' name='create group' handler={CreateGroupsPage}/>
   	<Route path='groups/view' name='view group' handler={ViewGroupsPage}/>
   	<Route path='analytics/notification' name='notification analytics' handler={NotificationAnalyticsPage}/>
+  	<Route path='analytics/permission' name='permission analytics' handler={PermissionAnalyticsPage}/>
     <Route path='/logout' name="logout"/>
     <DefaultRoute name='home' handler={HomePage}/>
   </Route>

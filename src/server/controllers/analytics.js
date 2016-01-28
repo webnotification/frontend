@@ -24,8 +24,9 @@ function permission(req, res, next){
         request({url: config.get_permission_analytics_url, qs: params}, function (error, response, body) {
             if (!error && response.statusCode == 200) {
                     var data = JSON.parse(body);
-                    var reactHtml = ReactDOMServer.renderToString(<PermissionAnalyticsPage data={data} />);
-                    res.render('dashboard/index', {reactOutput: reactHtml});
+                    res.send(data);
+                    //var reactHtml = ReactDOMServer.renderToString(<PermissionAnalyticsPage data={data} />);
+                    //res.render('dashboard/index', {reactOutput: reactHtml});
                 }
         });
 }
