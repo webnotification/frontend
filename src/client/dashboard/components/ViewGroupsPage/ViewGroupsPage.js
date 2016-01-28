@@ -7,24 +7,39 @@ import router from '../../router';
 
 
 class ViewGroupsPage extends React.Component {
-  render() {
+    constructor(props) {
+        super(props);
+        this.state = { data: null };
+    };
     
-    var group_names = this.props.data.groups.map(function(group){
-        return <li> {group.name} </li>;
-    });
+    componentDidMount() {
+        request.get('/api/group/list').end(function(err, res){
+            console.log(JSON.parse(res.text));
+            var data = JSON.parse(res.text);
+            this.setState({data:data});
+        }.bind(this));
+    };
 
-    return(
-        <div>
-            <h3> Website:  {this.props.data.website} </h3>
-            <label>Groups</label>
-            <ol>
-                {group_names}
-            </ol>
-            <form action="/dashboard/profile" method="get">
-                <button>Profile</button>
-            </form>
-        </div>
+    render() {
+    if(this.state.data){ 
+        var group_names = this.state.data.groups.map(function(group){
+            return <li> {group.name} </li>;
+        });
+
+        return(
+            <div>
+                <h3> Website:  {this.state.data.website} </h3>
+                <label>Groups</label>
+                <ol>
+                    {group_names}
+                </ol>
+                <form action="/dashboard/profile" method="get">
+                    <button>Profile</button>
+                </form>
+            </div>
         );
+    }
+    return <div>Loading...</div>;
   };
 }
 
