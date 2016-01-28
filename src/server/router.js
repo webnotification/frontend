@@ -1,9 +1,7 @@
 import Renderer from './helpers/renderer';
-// import website_routes from '../client/routes';
 import website_routes from '../client/website/routes';
 // import dashboard_routes from '../client/dashboard/routes';
 import apiRouter from './api';
-//import dashboardRouter from './dashboard';
 import auth from './controllers/auth';
 import passport from './helpers/passport';
 import UserController from './controllers/user';
@@ -29,16 +27,11 @@ let dashboardPage = (req, res, next)=>{
 // Main AppRouter
 let appRouter = (server)=>{
   server.use('/logout', auth.logout);
-  // server.post('/login', passport.authenticate('local'), auth.login);
   server.post('/login', passport.authenticate('local'), (req, res)=>{
     let url = req.query.redirect_to || '/dashboard/profile';
     res.status(200).json({ status: 'OK', data: {user:req.user, redirect_url: url} });
   });
-  //server.post('/register', UserController.create);
-
   server.use('/api', apiRouter);
-
-  //server.get('/profile', userProfile);
   server.get('/dashboard/*', auth.ensure, dashboardPage)
   server.get('*', indexPage);
 }
