@@ -4,50 +4,56 @@ import withStyles from '../../../decorators/withStyles';
 import request from 'superagent';
 import {Link} from 'react-router'
 import router from '../../router';
+import {Paper, TextField, RaisedButton, SelectField, MenuItem} from 'material-ui';
 
-
+@withStyles(styles)
 class PermissionPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { data: null };
+        this.state = { website: "", groups: [], selected_group_id: 0 };
     };
     
     componentDidMount() {
         request.get('/api/group/list').end(function(err, res){
-            console.log(JSON.parse(res.text));
             var data = JSON.parse(res.text);
-            this.setState({data:data});
+            this.setState({website: data.website, groups: data.groups, selected_group_id: data.groups[0].id});
         }.bind(this));
+    };
+    
+    handleChange(event, index, value){
+        this.setState({selected_group_id: value}); 
+    };
+
+    handleSend(){
+        request.post('/api/permission/send')
+            .set('Content-Type', 'application/json')
+            .send({website: this.state.website, group_id: this.state.selected_group_id})
+            .end();
     };
 
     render() {
-        if(this.state.data){
-            var group_options = this.state.data.groups.map(function(group){
-                return <option value= {group.id} > {group.name}({group.percentage}) </option>;
-            });
-
-            return(
-                <div>
+        return(
+            <div>
+                <Paper>
                     <h2> Send Permission Request </h2>
-                    <form name="send_permission_request" action="/api/permission/send"  method="post">
-                        <div>
-                            <label>Website</label>
-                            <input name="website" type="text" value={this.state.data.website} readOnly></input>
-                        </div>
-                        <div>
-                            <label>Group</label>
-                            <select name="group_id">
-                                {group_options}
-                            </select>
-                        </div>
-                        <div>
-                            <input type="submit" value="Send"></input>
-                        </div>
-                    </form>
-                </div>
-            );
-        }
-        return <div>Loading...</div>;
+                    <div>
+                        <label>Website: </label>
+                        <label>{this.state.website}</label>
+                    </div>
+                    <div>
+                        <label>Group: </label>
+                        <SelectField value={this.state.selected_group_id} onChange={this.handleChange.bind(this)}>
+                            {this.state.groups.map(
+                                 group => (<MenuItem key={group.id} value={group.id} primaryText={group.name}> </MenuItem>)
+                            )}
+                        </SelectField>
+                    </div>
+                    <div>
+                        <RaisedButton label="Send" secondary={true} onMouseDown={this.handleSend.bind(this)}/>
+                    </div>
+                </Paper>
+            </div>
+        );
     };
 }
 
