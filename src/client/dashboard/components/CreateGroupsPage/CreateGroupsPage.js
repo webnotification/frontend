@@ -4,46 +4,49 @@ import withStyles from '../../../decorators/withStyles';
 import request from 'superagent';
 import {Link} from 'react-router'
 import router from '../../router';
+import {Paper, TextField, RaisedButton, SelectField, MenuItem} from 'material-ui';
 
 
+@withStyles(styles)
 class CreateGroupsPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { data: null };
+        this.state = { website: "" };
     };
     
     componentDidMount() {
         request.get('/api/user/me').end(function(err, res){
             var data = JSON.parse(res.text).result.user;
-            this.setState({data:data});
+            this.setState({website: data.website});
         }.bind(this));
+    };
+    
+    handleSend(){
+        request.post('/api/group/create')
+            .set('Content-Type', 'application/json')
+            .send({ website: this.state.website, 
+                    group_name: this.refs.group_name.getValue(), 
+                    percentage: this.refs.percentage.getValue()
+            })
+            .end();
     };
 
     render() {
-        if(this.state.data){
+        if(true){
             return( 
                 <div>
-                    <h2> Create Group </h2>
-                    <form name="send_message" action="/api/group/create"  method="post">
-                        <div>
-                            <label>Website</label>
-                            <input name="website" type="text" value={this.state.data.website} readOnly></input>
-                        </div>
-                        <div> 
-                            <label>Group Name</label>
-                            <input name="group_name"  type="text"  width="400px"></input>
-                            <label><font color="red">{this.state.data.err_msg}</font></label>
-                        </div>
-                        <div>
-                            <label>Percentage of total users</label>
-                            <input name="percentage" type="text"></input>
-                        </div>
-                        <div>
-                            <input type="submit" value="Send"></input>
-                        </div>
-                    </form>
+                    <Paper>
+                        <h2> Create Group </h2>
+                        <label>Website: {this.state.website}</label>
+                        <br/>
+                        <TextField ref="group_name" hintText="Group Name" />
+                        <br/>
+                        <TextField ref="percentage" hintText="Percentage" />
+                        <br/>
+                        <RaisedButton label="Send" secondary={true} onMouseDown={this.handleSend.bind(this)}/>
+                    </Paper>
                 </div>
-        );
+            );
         }
         return <div>Loading...</div>;
   };
