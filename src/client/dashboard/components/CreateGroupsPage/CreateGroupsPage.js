@@ -32,24 +32,21 @@ class CreateGroupsPage extends React.Component {
     };
 
     render() {
-        if(true){
-            return( 
-                <div>
-                    <Paper>
-                        <h2> Create Group </h2>
-                        <label>Website: {this.state.website}</label>
-                        <br/>
-                        <TextField ref="group_name" hintText="Group Name" />
-                        <br/>
-                        <TextField ref="percentage" hintText="Percentage" />
-                        <br/>
-                        <RaisedButton label="Send" secondary={true} onMouseDown={this.handleSend.bind(this)}/>
-                    </Paper>
-                </div>
-            );
-        }
-        return <div>Loading...</div>;
-  };
+        return( 
+            <div>
+                <Paper>
+                    <h2> Create Group </h2>
+                    <label>Website: {this.state.website}</label>
+                    <br/>
+                    <TextField ref="group_name" hintText="Group Name" />
+                    <br/>
+                    <TextField ref="percentage" hintText="Percentage" />
+                    <br/>
+                    <RaisedButton label="Send" secondary={true} onMouseDown={this.handleSend.bind(this)}/>
+                </Paper>
+            </div>
+        );
+    };
 }
 
 export default CreateGroupsPage;
