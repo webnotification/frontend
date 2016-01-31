@@ -63,8 +63,8 @@ class NotificationPage extends React.Component {
                     <br/>
                     <TextField ref="target_url" hintText="Target URL"/>
                     <br/>
-                    <DatePicker ref="notification_date"/>
-                    <TimePicker ref="notification_time"/>
+                    <DatePicker ref="notification_date" defaultDate={new Date()}/>
+                    <TimePicker ref="notification_time" defaultTime={new Date()}/>
                     <RaisedButton label="Send" secondary={true} onMouseDown={this.handleSend.bind(this)}/>
                 </Paper>
             </div>
