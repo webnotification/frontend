@@ -4,13 +4,18 @@ import withStyles from '../../../decorators/withStyles';
 import request from 'superagent';
 import {Link} from 'react-router'
 import router from '../../router';
-import {Paper, TextField, RaisedButton, SelectField, MenuItem} from 'material-ui';
+import {Paper, TextField, RaisedButton, SelectField, MenuItem, Snackbar} from 'material-ui';
 
 @withStyles(styles)
 class PermissionPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { website: "", groups: [], selected_group_id: 0 };
+        this.state = { website: "", 
+                       groups: [], 
+                       selected_group_id: 0,
+                       permission_status: "",
+                       snackbar_open: false
+        };
     };
     
     componentDidMount() {
@@ -23,12 +28,23 @@ class PermissionPage extends React.Component {
     handleChange(event, index, value){
         this.setState({selected_group_id: value}); 
     };
-
+    
+    handleStatus(err, res){
+        if(!err && JSON.parse(res.text).success === true )
+            this.setState({permission_status: 'Permission Request Sent', snackbar_open: true});
+        else
+            this.setState({permission_status: 'An error occured while sending Permission Request', snackbar_open: true});
+    };
+    
     handleSend(){
         request.post('/api/permission/send')
             .set('Content-Type', 'application/json')
             .send({website: this.state.website, group_id: this.state.selected_group_id})
-            .end();
+            .end(this.handleStatus.bind(this));
+    };
+
+    handleRequestClose(){
+        this.setState({snackbar_open: false});
     };
 
     render() {
@@ -51,6 +67,12 @@ class PermissionPage extends React.Component {
                     <div>
                         <RaisedButton label="Send" secondary={true} onMouseDown={this.handleSend.bind(this)}/>
                     </div>
+                    <Snackbar
+                      open={this.state.snackbar_open}
+                      message={this.state.permission_status}
+                      autoHideDuration={2000}
+                      onRequestClose={this.handleRequestClose.bind(this)}
+                    />
                 </Paper>
             </div>
         );

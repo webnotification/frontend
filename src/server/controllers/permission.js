@@ -12,12 +12,12 @@ function send(req, res, next){
         config.send_permission_url,
         { form: params },
         function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-                console.log(body);
-            }
+            if (!error && response.statusCode == 200)
+                res.send(body);
+            else
+                res.send({success: false});
         }
     );
-    res.redirect('/dashboard/permission/send');
 }
 
 let stuff = {
