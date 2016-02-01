@@ -20,14 +20,10 @@ function create(req, res, next){
     let params = req.body;
     params['client_id'] = req.user.client_id;
     request({url: config.generate_group_url, qs: params}, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            if(JSON.parse(body).error == 'IntegrityError'){
-                res.send('Group name already exists');
-            }
-            else{
-                res.send('Group Created');
-            }
-        }
+        if (!error && response.statusCode == 200)
+            res.send(JSON.parse(body));
+        else
+            res.send({success: false});
     });
 };
 
