@@ -19,6 +19,18 @@ import MyRawTheme from 'material-ui/lib/styles/raw-themes/dark-raw-theme';
 @withContext
 @withStyles(styles)
 class App extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {sidebar: "hidden"};
+    }
+
+    handleClick(){
+        if(this.state.sidebar === "hidden")
+            this.setState({sidebar: "visible" });
+        else
+            this.setState({sidebar: "hidden" });
+    };
+  
 
 	static propTypes = {
 		error: PropTypes.object
@@ -41,7 +53,8 @@ class App extends React.Component {
 
 		return !this.props.error ? (
 			<div className='app-container'>
-				<Header/>
+				<Header handleClick={this.handleClick.bind(this)}/>
+                <Sidebar state={this.state.sidebar} handleClick={this.handleClick.bind(this)}/>
 				<div className='app-content'>
 					<RouteHandler/>
 				</div>
