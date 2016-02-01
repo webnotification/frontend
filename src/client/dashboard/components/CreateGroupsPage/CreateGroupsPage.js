@@ -34,8 +34,8 @@ class CreateGroupsPage extends React.Component {
     render() {
         return( 
             <div>
+                <h2> Create Group </h2>
                 <Paper>
-                    <h2> Create Group </h2>
                     <label>Website: {this.state.website}</label>
                     <br/>
                     <TextField ref="group_name" hintText="Group Name" />

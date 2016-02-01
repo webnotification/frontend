@@ -34,8 +34,8 @@ class PermissionPage extends React.Component {
     render() {
         return(
             <div>
+                <h2> Send Permission Request </h2>
                 <Paper>
-                    <h2> Send Permission Request </h2>
                     <div>
                         <label>Website: </label>
                         <label>{this.state.website}</label>

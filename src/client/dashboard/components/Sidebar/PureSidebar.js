@@ -14,7 +14,6 @@ class Sidebar extends React.Component{
         <MenuItem linkButton={true} containerElement={<Link to="/dashboard/groups/view" />} primaryText="View Groups" />
         <MenuItem linkButton={true} containerElement={<Link to="/dashboard/analytics/notification" />} primaryText="Notification Analytics" />
         <MenuItem linkButton={true} containerElement={<Link to="/dashboard/analytics/permission" />} primaryText="Permission Analytics" />
-        <MenuItem linkButton={true} containerElement={<Link to="/dashboard/profile" />} primaryText="Profile" />
       </LeftNav>
     );
   };
