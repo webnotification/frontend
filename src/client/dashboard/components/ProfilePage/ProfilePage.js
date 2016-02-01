@@ -19,6 +19,7 @@ class ProfilePage extends React.Component {
     componentDidMount() {
         request.get('/api/user/me').end(function(err, res){
             var data = JSON.parse(res.text).result;
+            data.image = data.image + '?q=' + new Date().getTime();
             this.setState({data:data});
         }.bind(this));
     };
