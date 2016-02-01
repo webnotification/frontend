@@ -7,13 +7,10 @@ import PermissionAnalyticsPage from './../../client/dashboard/components/Permiss
 
 function notification(req, res, next){
         let params = {'client_id': req.user.client_id};
-        console.log(config.get_notification_analytics_url);
-        console.log(params);
         request({url: config.get_notification_analytics_url, qs: params}, function (error, response, body) {
             if (!error && response.statusCode == 200) {
                     var data = JSON.parse(body);
-                    var reactHtml = ReactDOMServer.renderToString(<NotificationAnalyticsPage data={data} />);
-                    res.render('dashboard/index', {reactOutput: reactHtml});
+                    res.send(data);
                 }
         });
 }
@@ -23,8 +20,7 @@ function permission(req, res, next){
         request({url: config.get_permission_analytics_url, qs: params}, function (error, response, body) {
             if (!error && response.statusCode == 200) {
                     var data = JSON.parse(body);
-                    var reactHtml = ReactDOMServer.renderToString(<PermissionAnalyticsPage data={data} />);
-                    res.render('dashboard/index', {reactOutput: reactHtml});
+                    res.send(data);
                 }
         });
 }

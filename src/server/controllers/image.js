@@ -38,13 +38,13 @@ function upload(req, res, next){
                           console.log(err);     
                       else
                           console.log("Successfully uploaded data to myBucket/myKey");   
-                      res.redirect('../profile');
+                      res.redirect('/dashboard/profile');
                     });
                 });
             }
             else{
                 //req.flash('err_msg', config.IMAGE_SIZE_MESSAGE);
-                res.redirect('../profile');
+                res.redirect('/dashboard/profile');
             }
         }
     });

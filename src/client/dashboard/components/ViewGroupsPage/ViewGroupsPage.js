@@ -4,28 +4,35 @@ import withStyles from '../../../decorators/withStyles';
 import request from 'superagent';
 import {Link} from 'react-router'
 import router from '../../router';
-
+import {List, ListItem, Paper} from 'material-ui';
 
 class ViewGroupsPage extends React.Component {
-  render() {
+    constructor(props) {
+        super(props);
+        this.state = { website: "", groups: [] };
+    };
     
-    var group_names = this.props.data.groups.map(function(group){
-        return <li> {group.name} </li>;
-    });
+    componentDidMount() {
+        request.get('/api/group/list').end(function(err, res){
+            console.log(JSON.parse(res.text));
+            var data = JSON.parse(res.text);
+            this.setState({website: data.website, groups: data.groups});
+        }.bind(this));
+    };
 
-    return(
-        <div>
-            <h3> Website:  {this.props.data.website} </h3>
-            <label>Groups</label>
-            <ol>
-                {group_names}
-            </ol>
-            <form action="/dashboard/profile" method="get">
-                <button>Profile</button>
-            </form>
-        </div>
+    render() {
+        return(
+            <div>
+                <h3> Website:  {this.state.website} </h3>
+                <Paper>
+                    <h3> Groups </h3>
+                    <List>
+                        {this.state.groups.map(group => <ListItem>{group.name}</ListItem>)}
+                    </List>
+                </Paper>
+            </div>
         );
-  };
+    };
 }
 
 export default ViewGroupsPage;

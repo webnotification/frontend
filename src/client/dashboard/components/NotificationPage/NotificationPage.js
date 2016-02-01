@@ -4,72 +4,93 @@ import withStyles from '../../../decorators/withStyles';
 import request from 'superagent';
 import {Link} from 'react-router'
 import router from '../../router';
+import {Paper, TextField, RaisedButton, SelectField, MenuItem, DatePicker, TimePicker, Snackbar} from 'material-ui';
 
 
 class NotificationPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { data: null };
+        this.state = { website: "", 
+                       groups: [], 
+                       selected_group_id: 0,
+                       notification_status: "",
+                       snackbar_open: false
+        };
     };
     
     componentDidMount() {
         request.get('/api/group/list').end(function(err, res){
-            console.log(JSON.parse(res.text));
             var data = JSON.parse(res.text);
-            this.setState({data:data});
+            this.setState({website: data.website, groups: data.groups, selected_group_id: data.groups[0].id});
         }.bind(this));
+    };
+    
+    handleChange(event, index, value){
+        this.setState({selected_group_id: value}); 
+    };
+    
+    handleStatus(err, res){
+        if(!err && JSON.parse(res.text).success === true )
+            this.setState({notification_status: 'Notification Sent', snackbar_open: true});
+        else
+            this.setState({notification_status: 'An error occured while sending Notification', snackbar_open: true});
+    };
+
+    handleSend(){
+        request.post('/api/notification/send')
+            .set('Content-Type', 'application/json')
+            .send({website: this.state.website,
+                    group_id: this.state.selected_group_id,
+                    title: this.refs.title.getValue(),
+                    message: this.refs.message.getValue(),        
+                    target_url: this.refs.target_url.getValue(),
+                    date: this.refs.notification_date.getDate().toDateString(),
+                    time: this.refs.notification_time.getTime().toTimeString()
+            })
+            .end(this.handleStatus.bind(this));
+    };
+    
+    handleRequestClose(){
+        this.setState({snackbar_open: false});
     };
 
     render() {
-        if(this.state.data){
-            var group_options = this.state.data.groups.map(function(group){
-                return <option value= {group.id} > {group.name}({group.percentage}) </option>;
-            });
-            
-            return (
+        return (
             <div>
-                <h2> Send Message </h2>
-                <form name="send_message" action="/dashboard/notification/send"  method="post">
+                <h2> Send Notification </h2>
+                <Paper>
                     <div>
-                        <label>Website</label>
-                        <input name="website" type="text" value={this.state.data.website}></input>
-                    </div>
-                    <div>
-                        <label>Group</label>
-                        <select name="group_id">{group_options}</select> 
-                    </div>
-                    <div> 
-                        <label>Title</label>
-                        <input name="title"  type="text"  width="400px"></input>
+                        <label>Website: </label>
+                        <label>{this.state.website}</label>
                     </div>
                     <div>
-                        <label>Message</label>
-                        <textarea name="message" type="description"></textarea>
+                        <label>Group: </label>
+                        <br/>
+                        <SelectField value={this.state.selected_group_id} onChange={this.handleChange.bind(this)}>
+                            {this.state.groups.map(
+                                 group => (<MenuItem key={group.id} value={group.id} primaryText={group.name}> </MenuItem>)
+                            )}
+                        </SelectField>
                     </div>
-                    <div>
-                        <label>Target URL</label>
-                        <input name="target_url" type="text"></input>
-                    </div>
-                    <div>
-                        <label>Date</label>
-                        <input type="date" name="date"></input>
-                    </div>
-                    <div>
-                        <label>Time</label>
-                        <input type="time" name="time"></input>
-                    </div>
-                    <div>
-                        <input type="submit" value="Send"></input>
-                    </div>
-                </form>
-                <form action="/dashboard/profile" method="get">
-                    <button>Profile</button>
-                </form>
+                    <TextField ref="title" hintText="Title"/>
+                    <br/>
+                    <TextField ref="message" hintText="Message"/>
+                    <br/>
+                    <TextField ref="target_url" hintText="Target URL"/>
+                    <br/>
+                    <DatePicker ref="notification_date" defaultDate={new Date()}/>
+                    <TimePicker ref="notification_time" defaultTime={new Date()}/>
+                    <RaisedButton label="Send" secondary={true} onMouseDown={this.handleSend.bind(this)}/>
+                    <Snackbar
+                      open={this.state.snackbar_open}
+                      message={this.state.notification_status}
+                      autoHideDuration={2000}
+                      onRequestClose={this.handleRequestClose.bind(this)}
+                    />
+                </Paper>
             </div>
-            );
-        }
-        return <div>Loading...</div>;
-      };
+        );
+    }
 }
 
 export default NotificationPage;

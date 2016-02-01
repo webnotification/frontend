@@ -9,7 +9,7 @@ import NotificationImage from './NotificationImage';
 import FileSelector from './FileSelector';
 
 
-@withStyles(styles)
+//@withStyles(styles)
 class ProfilePage extends React.Component {
     constructor(props) {
         super(props);
@@ -18,7 +18,6 @@ class ProfilePage extends React.Component {
     
     componentDidMount() {
         request.get('/api/user/me').end(function(err, res){
-            console.log(JSON.parse(res.text).result);
             var data = JSON.parse(res.text).result;
             this.setState({data:data});
         }.bind(this));
@@ -29,7 +28,9 @@ class ProfilePage extends React.Component {
             return (
               <div className="ProfilePage">
                 <Details user={this.state.data.user}/>
+                <br/>
                 <NotificationImage image={this.state.data.image}/>
+                <br/>
                 <FileSelector />
               </div>
             );

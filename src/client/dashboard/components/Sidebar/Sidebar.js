@@ -3,9 +3,10 @@ import PureSidebar from './PureSidebar';
 
 class Sidebar extends React.Component {
 	render() {
-		return (
-			<PureSidebar/>
-		);
+        return (
+            <PureSidebar/>
+        );
+        return <div></div>;
 	}
 }
 

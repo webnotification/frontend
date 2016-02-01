@@ -19,7 +19,6 @@ import MyRawTheme from 'material-ui/lib/styles/raw-themes/dark-raw-theme';
 @withContext
 @withStyles(styles)
 class App extends React.Component {
-
 	static propTypes = {
 		error: PropTypes.object
 	};
@@ -42,6 +41,7 @@ class App extends React.Component {
 		return !this.props.error ? (
 			<div className='app-container'>
 				<Header/>
+                <Sidebar/>
 				<div className='app-content'>
 					<RouteHandler/>
 				</div>
