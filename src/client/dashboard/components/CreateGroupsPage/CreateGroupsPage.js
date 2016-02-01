@@ -24,6 +24,8 @@ class CreateGroupsPage extends React.Component {
     handleStatus(err, res){
         if(!err && JSON.parse(res.text).success === true )
             this.setState({group_status: 'Group Created', snackbar_open: true});
+        else if(!err && JSON.parse(res.text).error === 'IntegrityError' )
+            this.setState({group_status: 'Group name already exists', snackbar_open: true});
         else
             this.setState({group_status: 'An error occured while creating Group', snackbar_open: true});
     };
