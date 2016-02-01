@@ -15,7 +15,7 @@ class Header extends React.Component {
   render(){
     return (
       <header className='Header'>
-        <AppBar onLeftIconButtonTouchTap={this.props.handleClick}>
+        <AppBar>
           <Link to='home' className='Header-Title'>
             {<img title='Notification' src={logo}/>}
           </Link>

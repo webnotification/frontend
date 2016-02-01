@@ -3,12 +3,9 @@ import PureSidebar from './PureSidebar';
 
 class Sidebar extends React.Component {
 	render() {
-        if(this.props.state === "visible")
-        {
-            return (
-                <PureSidebar handleClick={this.props.handleClick}/>
-            );
-        }
+        return (
+            <PureSidebar/>
+        );
         return <div></div>;
 	}
 }
