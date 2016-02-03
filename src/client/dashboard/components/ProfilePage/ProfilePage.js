@@ -16,12 +16,16 @@ class ProfilePage extends React.Component {
         this.state = { data: null };
     };
     
-    componentDidMount() {
+    onImageUpload(){
         request.get('/api/user/me').end(function(err, res){
             var data = JSON.parse(res.text).result;
             data.image = data.image + '?q=' + new Date().getTime();
             this.setState({data:data});
         }.bind(this));
+    };
+    
+    componentDidMount() {
+        this.onImageUpload();
     };
 
     render() {
@@ -32,7 +36,7 @@ class ProfilePage extends React.Component {
                 <br/>
                 <NotificationImage image={this.state.data.image}/>
                 <br/>
-                <FileSelector />
+                <FileSelector onImageUpload={this.onImageUpload.bind(this)}/>
               </div>
             );
         }

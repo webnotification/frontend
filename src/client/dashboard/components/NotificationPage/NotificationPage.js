@@ -37,18 +37,23 @@ class NotificationPage extends React.Component {
     };
 
     handleSend(){
-        request.post('/api/notification/send')
-            .set('Content-Type', 'application/json')
-            .send({website: this.state.website,
-                    group_id: this.state.selected_group_id,
-                    title: this.refs.title.getValue(),
-                    message: this.refs.message.getValue(),        
-                    target_url: this.refs.target_url.getValue(),
-                    date: this.refs.notification_date.getDate().toDateString(),
-                    time: this.refs.notification_time.getTime().toTimeString()
-            })
-            .end(this.handleStatus.bind(this));
-    };
+        if(this.refs.title.getValue() === ''){
+            this.setState({notification_status: 'Title is mandatory.', snackbar_open: true});
+        }
+        else{
+            request.post('/api/notification/send')
+                .set('Content-Type', 'application/json')
+                .send({website: this.state.website,
+                        group_id: this.state.selected_group_id,
+                        title: this.refs.title.getValue(),
+                        message: this.refs.message.getValue(),        
+                        target_url: 'http://' + this.refs.target_url.getValue(),
+                        date: this.refs.notification_date.getDate().toDateString(),
+                        time: this.refs.notification_time.getTime().toTimeString()
+                })
+                .end(this.handleStatus.bind(this));
+        }
+};
     
     handleRequestClose(){
         this.setState({snackbar_open: false});
@@ -76,6 +81,7 @@ class NotificationPage extends React.Component {
                     <br/>
                     <TextField ref="message" hintText="Message"/>
                     <br/>
+                    <label>http://</label>
                     <TextField ref="target_url" hintText="Target URL"/>
                     <br/>
                     <DatePicker ref="notification_date" defaultDate={new Date()}/>

@@ -8,8 +8,7 @@ import multer from 'multer';
 import fs from 'fs';
 import AWS from 'aws-sdk';
 
-AWS.config.region = 'ap-southeast-1';
-var s3_bucket_name = 'notificationicons';
+AWS.config.loadFromPath('./credentials.json');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -31,20 +30,20 @@ function upload(req, res, next){
             if(req.file.size < config.IMAGE_SIZE_THRESHOLD){
                 var bodyStream = fs.createReadStream(req.file.path);
                 var s3 = new AWS.S3(); 
-                s3.createBucket({Bucket: s3_bucket_name}, function() {
-                    var params = {Bucket: s3_bucket_name, Key: req.user.client_id, Body: bodyStream};
+                s3.createBucket({Bucket: config.s3_bucket_name}, function() {
+                    var params = {Bucket: config.s3_bucket_name, Key: req.user.client_id, Body: bodyStream};
                     s3.putObject(params, function(err, data) {
                       if (err)
                           console.log(err);     
                       else
                           console.log("Successfully uploaded data to myBucket/myKey");   
-                      res.redirect('/dashboard/profile');
+                      res.send({success: true});
                     });
                 });
             }
             else{
                 //req.flash('err_msg', config.IMAGE_SIZE_MESSAGE);
-                res.redirect('/dashboard/profile');
+                res.send({success: false});
             }
         }
     });

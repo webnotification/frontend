@@ -6,7 +6,6 @@ class Sidebar extends React.Component {
         return (
             <PureSidebar/>
         );
-        return <div></div>;
 	}
 }
 
