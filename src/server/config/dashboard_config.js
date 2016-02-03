@@ -11,9 +11,12 @@ let config = {
         send_permission_url : base_url + '/send_permission_message',
         get_notification_analytics_url : base_url + '/get_notification_analytics',
         get_permission_analytics_url : base_url + '/get_permission_analytics',
-        NOTIFICATION_IMAGE_BASE_PATH : "https://s3-ap-southeast-1.amazonaws.com/notificationicons/",
         IMAGE_SIZE_THRESHOLD : IMAGE_SIZE_THRESHOLD,  //in Bytes
-        IMAGE_SIZE_MESSAGE : 'File size is bigger than '+IMAGE_SIZE_THRESHOLD+' bytes'
+        IMAGE_SIZE_MESSAGE : 'File size is bigger than '+IMAGE_SIZE_THRESHOLD+' bytes',
+        NOTIFICATION_IMAGE_BASE_PATH : "https://s3-ap-southeast-1.amazonaws.com/notificationicons.dev/",
+        //NOTIFICATION_IMAGE_BASE_PATH : "https://s3-ap-southeast-1.amazonaws.com/notificationicons/",
+        s3_bucket_name: 'notificationicons.dev',
+        //s3_bucket_name: 'notificationicons.dev',
 }
 
 export default config;
