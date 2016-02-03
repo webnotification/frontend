@@ -37,13 +37,13 @@ function upload(req, res, next){
                           console.log(err);     
                       else
                           console.log("Successfully uploaded data to myBucket/myKey");   
-                      res.redirect('/dashboard/profile');
+                      res.send({success: true});
                     });
                 });
             }
             else{
                 //req.flash('err_msg', config.IMAGE_SIZE_MESSAGE);
-                res.redirect('/dashboard/profile');
+                res.send({success: false});
             }
         }
     });
