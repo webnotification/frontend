@@ -16,9 +16,9 @@ class ImagePage extends React.Component {
     };
     
     onImageUpload(){
-        request.get('/api/user/me').end(function(err, res){
-            var data = JSON.parse(res.text).result;
-            var image = data.image + '?q=' + new Date().getTime();
+        request.get('/api/user/image').end(function(err, res){
+            var image = JSON.parse(res.text).result;
+            var image = image + '?q=' + new Date().getTime();
             this.setState({image: image});
         }.bind(this));
     };

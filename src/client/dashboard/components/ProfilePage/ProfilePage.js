@@ -14,9 +14,9 @@ class ProfilePage extends React.Component {
     };
     
     componentDidMount() {
-        request.get('/api/user/me').end(function(err, res){
-            var data = JSON.parse(res.text).result;
-            this.setState({user: data.user});
+        request.get('/api/user/details').end(function(err, res){
+            var user = JSON.parse(res.text).result;
+            this.setState({user: user});
         }.bind(this));
     };
 
