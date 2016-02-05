@@ -70,37 +70,31 @@ class NotificationPage extends React.Component {
             return (
                 <div>
                     <h2> Send Notification </h2>
-                    <Paper>
-                        <div>
-                            <label>Website: </label>
-                            <label>{this.state.website}</label>
-                        </div>
-                        <div>
-                            <label>Group: </label>
-                            <br/>
-                            <SelectField value={this.state.selected_group_id} onChange={this.handleChange.bind(this)}>
-                                {this.state.groups.map(
-                                     group => (<MenuItem key={group.id} value={group.id} primaryText={group.name}> </MenuItem>)
-                                )}
-                            </SelectField>
-                        </div>
-                        <TextField ref="title" hintText="Title"/>
+                    <div>
+                        <label>Group: </label>
                         <br/>
-                        <TextField ref="message" hintText="Message"/>
-                        <br/>
-                        <label>http://</label>
-                        <TextField ref="target_url" hintText="Target URL"/>
-                        <br/>
-                        <DatePicker ref="notification_date" defaultDate={new Date()}/>
-                        <TimePicker ref="notification_time" defaultTime={new Date()}/>
-                        <RaisedButton label="Send" secondary={true} onMouseDown={this.handleSend.bind(this)}/>
-                        <Snackbar
-                          open={this.state.snackbar_open}
-                          message={this.state.notification_status}
-                          autoHideDuration={2000}
-                          onRequestClose={this.handleRequestClose.bind(this)}
-                        />
-                    </Paper>
+                        <SelectField value={this.state.selected_group_id} onChange={this.handleChange.bind(this)}>
+                            {this.state.groups.map(
+                                 group => (<MenuItem key={group.id} value={group.id} primaryText={group.name}> </MenuItem>)
+                            )}
+                        </SelectField>
+                    </div>
+                    <TextField ref="title" hintText="Title"/>
+                    <br/>
+                    <TextField ref="message" hintText="Message"/>
+                    <br/>
+                    <label>http://</label>
+                    <TextField ref="target_url" hintText="Target URL"/>
+                    <br/>
+                    <DatePicker ref="notification_date" defaultDate={new Date()}/>
+                    <TimePicker ref="notification_time" defaultTime={new Date()}/>
+                    <RaisedButton label="Send" secondary={true} onMouseDown={this.handleSend.bind(this)}/>
+                    <Snackbar
+                      open={this.state.snackbar_open}
+                      message={this.state.notification_status}
+                      autoHideDuration={2000}
+                      onRequestClose={this.handleRequestClose.bind(this)}
+                    />
                 </div>
             );
         }

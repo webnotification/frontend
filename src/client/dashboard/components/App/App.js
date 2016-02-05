@@ -14,7 +14,7 @@ import { RouteHandler } from 'react-router';
 import Router from 'react-router';
 
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
-import MyRawTheme from 'material-ui/lib/styles/raw-themes/dark-raw-theme';
+import MyRawTheme from 'material-ui/lib/styles/raw-themes/light-raw-theme';
 
 @withContext
 @withStyles(styles)

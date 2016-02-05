@@ -14,11 +14,7 @@ class HomePage extends React.Component {
   render(){
     return (
       <div className='HomePage'>
-        <div className='main-backdrop'>
-          <div className="demo-button-wrap">
-               <h3> Welcome </h3>
-          </div>
-        </div>
+        <h3> Welcome </h3>
       </div>
     )
   };
