@@ -16,10 +16,16 @@ class SentPage extends React.Component {
     };
 
     render() {
+        var redirect_button = <div></div>;
+        if(this.props.redirect_message)
+            var redirect_button = <RaisedButton label={this.props.redirect_message} 
+                                                secondary={true} 
+                                                onMouseDown={this.props.handleSendAnother}/>;
+
         return (
           <div className="SentPage">
                 <h3>{this.props.info_message}</h3>
-                <RaisedButton label={this.props.redirect_message} secondary={true} onMouseDown={this.props.handleSendAnother}/>
+                {redirect_button}
           </div>
         );
     }
