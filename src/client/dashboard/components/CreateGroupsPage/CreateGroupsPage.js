@@ -53,21 +53,19 @@ class CreateGroupsPage extends React.Component {
             return( 
                 <div>
                     <h2> Create Group </h2>
-                    <Paper>
-                        <label>Website: {this.state.website}</label>
-                        <br/>
-                        <TextField ref="group_name" hintText="Group Name" />
-                        <br/>
-                        <TextField ref="percentage" hintText="Percentage" />
-                        <br/>
-                        <RaisedButton label="Send" secondary={true} onMouseDown={this.handleSend.bind(this)}/>
-                        <Snackbar
-                          open={this.state.snackbar_open}
-                          message={this.state.group_status}
-                          autoHideDuration={2000}
-                          onRequestClose={this.handleRequestClose.bind(this)}
-                        />
-                    </Paper>
+                    <label>Website: {this.state.website}</label>
+                    <br/>
+                    <TextField ref="group_name" hintText="Group Name" />
+                    <br/>
+                    <TextField ref="percentage" hintText="Percentage" />
+                    <br/>
+                    <RaisedButton label="Send" secondary={true} onMouseDown={this.handleSend.bind(this)}/>
+                    <Snackbar
+                      open={this.state.snackbar_open}
+                      message={this.state.group_status}
+                      autoHideDuration={2000}
+                      onRequestClose={this.handleRequestClose.bind(this)}
+                    />
                 </div>
             );
         }

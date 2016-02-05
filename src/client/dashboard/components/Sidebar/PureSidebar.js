@@ -7,7 +7,7 @@ import {ListItem, FlatButton}  from  'material-ui';
 class Sidebar extends React.Component{
   render(){
     return (
-      <LeftNav docked={this.props.isDocked}>
+      <LeftNav docked={this.props.isDocked} className="sidebar">
         <ListItem primaryText="Permission Request" containerElement={<Link to="/dashboard/permission/send" />} />
         <ListItem primaryText="Notification" containerElement={<Link to="/dashboard/notification/send" />} />
         <ListItem primaryText="Notification Image" containerElement={<Link to="/dashboard/image" />} />

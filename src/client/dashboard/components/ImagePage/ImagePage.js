@@ -8,7 +8,7 @@ import NotificationImage from './NotificationImage';
 import FileSelector from './FileSelector';
 
 
-//@withStyles(styles)
+@withStyles(styles)
 class ImagePage extends React.Component {
     constructor(props) {
         super(props);

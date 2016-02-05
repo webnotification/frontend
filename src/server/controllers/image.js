@@ -42,7 +42,6 @@ function upload(req, res, next){
                 });
             }
             else{
-                //req.flash('err_msg', config.IMAGE_SIZE_MESSAGE);
                 res.send({success: false});
             }
         }
