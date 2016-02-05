@@ -11,16 +11,11 @@ class HomePage extends React.Component {
     muiTheme: PropTypes.object
   };
 
-  handleClick(event){
-    console.log('Handle click')
-  };
-
   render(){
     return (
       <div className='HomePage'>
         <div className='main-backdrop'>
           <div className="demo-button-wrap">
-            <RaisedButton secondary={true} className='demo-btn' onClick={this.handleClick} label="Trigger Notification" labelPosition="after"/>
           </div>
         </div>
       </div>

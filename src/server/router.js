@@ -28,7 +28,7 @@ let dashboardPage = (req, res, next)=>{
 let appRouter = (server)=>{
   server.use('/logout', auth.logout);
   server.post('/login', passport.authenticate('local'), (req, res)=>{
-    let url = req.query.redirect_to || '/dashboard/profile';
+    let url = req.query.redirect_to || '/dashboard';
     res.status(200).json({ status: 'OK', data: {user:req.user, redirect_url: url} });
   });
   server.use('/api', apiRouter);
