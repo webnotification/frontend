@@ -16,7 +16,7 @@ class HomePage extends React.Component {
       <div className='HomePage'>
         <div className='main-backdrop'>
           <div className="demo-button-wrap">
-            <h1>This is dashboard HomePage</h1>
+               <h3> Welcome </h3>
           </div>
         </div>
       </div>

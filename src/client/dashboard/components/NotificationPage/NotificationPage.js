@@ -5,6 +5,7 @@ import request from 'superagent';
 import {Link} from 'react-router'
 import router from '../../router';
 import {Paper, TextField, RaisedButton, SelectField, MenuItem, DatePicker, TimePicker, Snackbar} from 'material-ui';
+import SentPage from './../SentPage/SentPage'
 
 
 class NotificationPage extends React.Component {
@@ -14,7 +15,8 @@ class NotificationPage extends React.Component {
                        groups: [], 
                        selected_group_id: 0,
                        notification_status: "",
-                       snackbar_open: false
+                       snackbar_open: false,
+                       notification_sent: false
         };
     };
     
@@ -31,7 +33,7 @@ class NotificationPage extends React.Component {
     
     handleStatus(err, res){
         if(!err && JSON.parse(res.text).success === true )
-            this.setState({notification_status: 'Notification Sent', snackbar_open: true});
+            this.setState({notification_sent: true});
         else
             this.setState({notification_status: 'An error occured while sending Notification', snackbar_open: true});
     };
@@ -53,49 +55,65 @@ class NotificationPage extends React.Component {
                 })
                 .end(this.handleStatus.bind(this));
         }
-};
+    };
     
+    handleSendAnother(){
+        this.setState({notification_sent: false});
+    };
+
     handleRequestClose(){
         this.setState({snackbar_open: false});
     };
 
     render() {
-        return (
-            <div>
-                <h2> Send Notification </h2>
-                <Paper>
-                    <div>
-                        <label>Website: </label>
-                        <label>{this.state.website}</label>
-                    </div>
-                    <div>
-                        <label>Group: </label>
+        if(this.state.notification_sent === false){
+            return (
+                <div>
+                    <h2> Send Notification </h2>
+                    <Paper>
+                        <div>
+                            <label>Website: </label>
+                            <label>{this.state.website}</label>
+                        </div>
+                        <div>
+                            <label>Group: </label>
+                            <br/>
+                            <SelectField value={this.state.selected_group_id} onChange={this.handleChange.bind(this)}>
+                                {this.state.groups.map(
+                                     group => (<MenuItem key={group.id} value={group.id} primaryText={group.name}> </MenuItem>)
+                                )}
+                            </SelectField>
+                        </div>
+                        <TextField ref="title" hintText="Title"/>
                         <br/>
-                        <SelectField value={this.state.selected_group_id} onChange={this.handleChange.bind(this)}>
-                            {this.state.groups.map(
-                                 group => (<MenuItem key={group.id} value={group.id} primaryText={group.name}> </MenuItem>)
-                            )}
-                        </SelectField>
-                    </div>
-                    <TextField ref="title" hintText="Title"/>
-                    <br/>
-                    <TextField ref="message" hintText="Message"/>
-                    <br/>
-                    <label>http://</label>
-                    <TextField ref="target_url" hintText="Target URL"/>
-                    <br/>
-                    <DatePicker ref="notification_date" defaultDate={new Date()}/>
-                    <TimePicker ref="notification_time" defaultTime={new Date()}/>
-                    <RaisedButton label="Send" secondary={true} onMouseDown={this.handleSend.bind(this)}/>
-                    <Snackbar
-                      open={this.state.snackbar_open}
-                      message={this.state.notification_status}
-                      autoHideDuration={2000}
-                      onRequestClose={this.handleRequestClose.bind(this)}
-                    />
-                </Paper>
-            </div>
-        );
+                        <TextField ref="message" hintText="Message"/>
+                        <br/>
+                        <label>http://</label>
+                        <TextField ref="target_url" hintText="Target URL"/>
+                        <br/>
+                        <DatePicker ref="notification_date" defaultDate={new Date()}/>
+                        <TimePicker ref="notification_time" defaultTime={new Date()}/>
+                        <RaisedButton label="Send" secondary={true} onMouseDown={this.handleSend.bind(this)}/>
+                        <Snackbar
+                          open={this.state.snackbar_open}
+                          message={this.state.notification_status}
+                          autoHideDuration={2000}
+                          onRequestClose={this.handleRequestClose.bind(this)}
+                        />
+                    </Paper>
+                </div>
+            );
+        }
+        else{
+            let info_message = 'Notification successfully sent.';
+            let redirect_message = 'Send another notification';
+            return(
+                    <SentPage info_message={info_message} 
+                              redirect_message={redirect_message} 
+                              handleSendAnother={this.handleSendAnother.bind(this)} 
+                              />
+            );
+        }
     }
 }
 

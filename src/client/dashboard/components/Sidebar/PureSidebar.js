@@ -10,6 +10,7 @@ class Sidebar extends React.Component{
       <LeftNav docked={this.props.isDocked}>
         <ListItem primaryText="Permission Request" containerElement={<Link to="/dashboard/permission/send" />} />
         <ListItem primaryText="Notification" containerElement={<Link to="/dashboard/notification/send" />} />
+        <ListItem primaryText="Notification Image" containerElement={<Link to="/dashboard/image" />} />
         <ListItem
             primaryText="Groups"
             primaryTogglesNestedList={true}

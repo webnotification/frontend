@@ -4,39 +4,30 @@ import withStyles from '../../../decorators/withStyles';
 import request from 'superagent';
 import {Link} from 'react-router'
 import router from '../../router';
-import Details from './Details';
-import NotificationImage from './NotificationImage';
-import FileSelector from './FileSelector';
 
 
 //@withStyles(styles)
 class ProfilePage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { data: null };
-    };
-    
-    onImageUpload(){
-        request.get('/api/user/me').end(function(err, res){
-            var data = JSON.parse(res.text).result;
-            data.image = data.image + '?q=' + new Date().getTime();
-            this.setState({data:data});
-        }.bind(this));
+        this.state = { user: null };
     };
     
     componentDidMount() {
-        this.onImageUpload();
+        request.get('/api/user/details').end(function(err, res){
+            var user = JSON.parse(res.text).result;
+            this.setState({user: user});
+        }.bind(this));
     };
 
     render() {
-        if(this.state.data){
+        var user = this.state.user;
+        if(user){
             return (
               <div className="ProfilePage">
-                <Details user={this.state.data.user}/>
-                <br/>
-                <NotificationImage image={this.state.data.image}/>
-                <br/>
-                <FileSelector onImageUpload={this.onImageUpload.bind(this)}/>
+                <h2> Profile </h2>
+                <h5><strong>username</strong>: {user.username}</h5>
+                <h5><strong>website</strong>: {user.website} </h5>
               </div>
             );
         }

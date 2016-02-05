@@ -5,6 +5,7 @@ import request from 'superagent';
 import {Link} from 'react-router'
 import router from '../../router';
 import {Paper, TextField, RaisedButton, SelectField, MenuItem, Snackbar} from 'material-ui';
+import SentPage from './../SentPage/SentPage'
 
 @withStyles(styles)
 class PermissionPage extends React.Component {
@@ -14,7 +15,8 @@ class PermissionPage extends React.Component {
                        groups: [], 
                        selected_group_id: 0,
                        permission_status: "",
-                       snackbar_open: false
+                       snackbar_open: false,
+                       permission_sent: false
         };
     };
     
@@ -31,7 +33,7 @@ class PermissionPage extends React.Component {
     
     handleStatus(err, res){
         if(!err && JSON.parse(res.text).success === true )
-            this.setState({permission_status: 'Permission Request Sent', snackbar_open: true});
+            this.setState({permission_sent: true});
         else
             this.setState({permission_status: 'An error occured while sending Permission Request', snackbar_open: true});
     };
@@ -48,34 +50,42 @@ class PermissionPage extends React.Component {
     };
 
     render() {
-        return(
-            <div>
-                <h2> Send Permission Request </h2>
-                <Paper>
-                    <div>
-                        <label>Website: </label>
-                        <label>{this.state.website}</label>
-                    </div>
-                    <div>
-                        <label>Group: </label>
-                        <SelectField value={this.state.selected_group_id} onChange={this.handleChange.bind(this)}>
-                            {this.state.groups.map(
-                                 group => (<MenuItem key={group.id} value={group.id} primaryText={group.name}> </MenuItem>)
-                            )}
-                        </SelectField>
-                    </div>
-                    <div>
-                        <RaisedButton label="Send" secondary={true} onMouseDown={this.handleSend.bind(this)}/>
-                    </div>
-                    <Snackbar
-                      open={this.state.snackbar_open}
-                      message={this.state.permission_status}
-                      autoHideDuration={2000}
-                      onRequestClose={this.handleRequestClose.bind(this)}
-                    />
-                </Paper>
-            </div>
-        );
+        if(this.state.permission_sent === false){
+            return(
+                <div>
+                    <h2> Send Permission Request </h2>
+                    <Paper>
+                        <div>
+                            <label>Website: </label>
+                            <label>{this.state.website}</label>
+                        </div>
+                        <div>
+                            <label>Group: </label>
+                            <SelectField value={this.state.selected_group_id} onChange={this.handleChange.bind(this)}>
+                                {this.state.groups.map(
+                                     group => (<MenuItem key={group.id} value={group.id} primaryText={group.name}> </MenuItem>)
+                                )}
+                            </SelectField>
+                        </div>
+                        <div>
+                            <RaisedButton label="Send" secondary={true} onMouseDown={this.handleSend.bind(this)}/>
+                        </div>
+                        <Snackbar
+                          open={this.state.snackbar_open}
+                          message={this.state.permission_status}
+                          autoHideDuration={2000}
+                          onRequestClose={this.handleRequestClose.bind(this)}
+                        />
+                    </Paper>
+                </div>
+            );
+        }
+        else{
+            let info_message = 'Permission Request successfully sent.';
+            return(
+                    <SentPage info_message={info_message} />
+            );
+        }
     };
 }
 

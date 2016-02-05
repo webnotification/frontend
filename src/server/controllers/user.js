@@ -48,14 +48,17 @@ let createOne = (req, res, next)=>{
     });
 }
 
-var getCurrent = function(req, res, next){
+var getUserDetails = function(req, res, next){
   if (req.isAuthenticated())
-  {
-    var data = {
-        user : req.user,
-        image : config.NOTIFICATION_IMAGE_BASE_PATH + req.user.client_id,
-    };
-    res.json({ status: 'ok' , result: data});
+    res.json({ status: 'ok' , result: req.user});
+  else
+    res.sendStatus(403);
+}
+
+var getUserImage = function(req, res, next){
+  if (req.isAuthenticated()){
+    let image = config.NOTIFICATION_IMAGE_BASE_PATH + req.user.client_id;
+    res.json({ status: 'ok' , result: image});
   }
   else
     res.sendStatus(403);
@@ -64,5 +67,6 @@ var getCurrent = function(req, res, next){
 
 export default {
   create: createOne,
-  me: getCurrent
+  details: getUserDetails,
+  image: getUserImage
 }

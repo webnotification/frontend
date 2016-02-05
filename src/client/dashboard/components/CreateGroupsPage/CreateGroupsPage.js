@@ -5,25 +5,25 @@ import request from 'superagent';
 import {Link} from 'react-router'
 import router from '../../router';
 import {Paper, TextField, RaisedButton, SelectField, MenuItem, Snackbar} from 'material-ui';
-
+import SentPage from './../SentPage/SentPage'
 
 @withStyles(styles)
 class CreateGroupsPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { website: "", snackbar_open: false, group_status: "" };
+        this.state = { website: "", snackbar_open: false, group_status: "", created: false };
     };
     
     componentDidMount() {
-        request.get('/api/user/me').end(function(err, res){
-            var data = JSON.parse(res.text).result.user;
+        request.get('/api/user/details').end(function(err, res){
+            var data = JSON.parse(res.text).result;
             this.setState({website: data.website});
         }.bind(this));
     };
     
     handleStatus(err, res){
         if(!err && JSON.parse(res.text).success === true )
-            this.setState({group_status: 'Group Created', snackbar_open: true});
+            this.setState({created: true});
         else if(!err && JSON.parse(res.text).error === 'IntegrityError' )
             this.setState({group_status: 'Group name already exists', snackbar_open: true});
         else
@@ -40,31 +40,47 @@ class CreateGroupsPage extends React.Component {
             .end(this.handleStatus.bind(this));
     };
 
+    handleSendAnother(){
+        this.setState({created: false});
+    };
+
     handleRequestClose(){
         this.setState({snackbar_open: false});
     };
 
     render() {
-        return( 
-            <div>
-                <h2> Create Group </h2>
-                <Paper>
-                    <label>Website: {this.state.website}</label>
-                    <br/>
-                    <TextField ref="group_name" hintText="Group Name" />
-                    <br/>
-                    <TextField ref="percentage" hintText="Percentage" />
-                    <br/>
-                    <RaisedButton label="Send" secondary={true} onMouseDown={this.handleSend.bind(this)}/>
-                    <Snackbar
-                      open={this.state.snackbar_open}
-                      message={this.state.group_status}
-                      autoHideDuration={2000}
-                      onRequestClose={this.handleRequestClose.bind(this)}
-                    />
-                </Paper>
-            </div>
-        );
+        if(this.state.created === false){
+            return( 
+                <div>
+                    <h2> Create Group </h2>
+                    <Paper>
+                        <label>Website: {this.state.website}</label>
+                        <br/>
+                        <TextField ref="group_name" hintText="Group Name" />
+                        <br/>
+                        <TextField ref="percentage" hintText="Percentage" />
+                        <br/>
+                        <RaisedButton label="Send" secondary={true} onMouseDown={this.handleSend.bind(this)}/>
+                        <Snackbar
+                          open={this.state.snackbar_open}
+                          message={this.state.group_status}
+                          autoHideDuration={2000}
+                          onRequestClose={this.handleRequestClose.bind(this)}
+                        />
+                    </Paper>
+                </div>
+            );
+        }
+        else{
+            let info_message = 'Group successfully created.';
+            let redirect_message = 'Create Another Group';
+            return(
+                    <SentPage info_message={info_message} 
+                              redirect_message={redirect_message} 
+                              handleSendAnother={this.handleSendAnother.bind(this)} 
+                              />
+            );
+        }
     };
 }
 
