@@ -54,21 +54,15 @@ class PermissionPage extends React.Component {
             return(
                 <div>
                     <h2> Send Permission Request </h2>
-                    <div>
-                        <label>Website: </label>
-                        <label>{this.state.website}</label>
-                    </div>
-                    <div>
-                        <label>Group: </label>
-                        <SelectField value={this.state.selected_group_id} onChange={this.handleChange.bind(this)}>
-                            {this.state.groups.map(
-                                 group => (<MenuItem key={group.id} value={group.id} primaryText={group.name}> </MenuItem>)
-                            )}
-                        </SelectField>
-                    </div>
-                    <div>
-                        <RaisedButton label="Send" secondary={true} onMouseDown={this.handleSend.bind(this)}/>
-                    </div>
+                    <div> Group: </div>
+                    <SelectField value={this.state.selected_group_id} onChange={this.handleChange.bind(this)}>
+                        {this.state.groups.map(
+                             group => (<MenuItem key={group.id} value={group.id} primaryText={group.name}> </MenuItem>)
+                        )}
+                    </SelectField>
+                    <br/>
+                    <RaisedButton label="Send" secondary={true} onMouseDown={this.handleSend.bind(this)}/>
+                    <br/>
                     <Snackbar
                       open={this.state.snackbar_open}
                       message={this.state.permission_status}

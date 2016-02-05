@@ -53,8 +53,6 @@ class CreateGroupsPage extends React.Component {
             return( 
                 <div>
                     <h2> Create Group </h2>
-                    <label>Website: {this.state.website}</label>
-                    <br/>
                     <TextField ref="group_name" hintText="Group Name" />
                     <br/>
                     <TextField ref="percentage" hintText="Percentage" />

@@ -23,7 +23,6 @@ class ViewGroupsPage extends React.Component {
     render() {
         return(
             <div>
-                <h3> Website:  {this.state.website} </h3>
                 <h3> Groups </h3>
                 <List>
                     {this.state.groups.map(group => <ListItem>{group.name}</ListItem>)}

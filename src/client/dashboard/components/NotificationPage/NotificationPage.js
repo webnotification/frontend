@@ -71,10 +71,6 @@ class NotificationPage extends React.Component {
                 <div>
                     <h2> Send Notification </h2>
                     <div>
-                        <label>Website: </label>
-                        <label>{this.state.website}</label>
-                    </div>
-                    <div>
                         <label>Group: </label>
                         <br/>
                         <SelectField value={this.state.selected_group_id} onChange={this.handleChange.bind(this)}>
