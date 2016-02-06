@@ -45,6 +45,10 @@ class PermissionPage extends React.Component {
             .end(this.handleStatus.bind(this));
     };
 
+    handleSendAnother(){
+        this.setState({permission_sent: false});
+    };
+
     handleRequestClose(){
         this.setState({snackbar_open: false});
     };
@@ -74,8 +78,12 @@ class PermissionPage extends React.Component {
         }
         else{
             let info_message = 'Permission Request successfully sent.';
+            let redirect_message = 'Send another Permission Request';
             return(
-                    <SentPage info_message={info_message} />
+                    <SentPage info_message={info_message} 
+                              redirect_message={redirect_message} 
+                              handleSendAnother={this.handleSendAnother.bind(this)} 
+                              />
             );
         }
     };
