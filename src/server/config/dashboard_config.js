@@ -11,6 +11,7 @@ let config = {
         send_permission_url : base_url + '/send_permission_message',
         get_notification_analytics_url : base_url + '/get_notification_analytics',
         get_permission_analytics_url : base_url + '/get_permission_analytics',
+        DEFAULT_IMAGE_URL : 'https://s3-ap-southeast-1.amazonaws.com/notificationicons/default_image',
         IMAGE_SIZE_THRESHOLD : IMAGE_SIZE_THRESHOLD,  //in Bytes
         IMAGE_SIZE_ERROR_MSG : 'File size must be less than '+IMAGE_SIZE_THRESHOLD/1024+' Kilobytes',
         NOTIFICATION_IMAGE_BASE_PATH : "https://s3-ap-southeast-1.amazonaws.com/notificationicons.dev/",
