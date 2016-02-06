@@ -21,7 +21,7 @@ class SentPage extends React.Component {
                 <h3>{this.props.info_message}</h3>
                 <RaisedButton label={this.props.redirect_message} 
                               secondary={true} 
-                              onMouseDown={this.props.handleSendAnother}/>;
+                              onMouseDown={this.props.handleSendAnother}/>
           </div>
         );
     }
